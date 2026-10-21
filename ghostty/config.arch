@@ -4,7 +4,8 @@
 # Additionally, each config option is also explained in detail
 # on Ghostty's website, at https://ghostty.org/docs/config.
 
-theme = Gruvbox Dark
+# DMS 가 Material3 색으로 생성하는 테마 (~/.config/ghostty/themes/dankcolors)
+theme = dankcolors
 
 # background-opacity = 0.8
 # background-blur = true
@@ -19,5 +20,4 @@ keybind = ctrl+shift+e=unbind
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down 
 
-## -- quick-terminal Setting
-keybind = global:alt+space=toggle_quick_terminal
+# quick-terminal(alt+space) 은 mac(config.mac) 에서만. linux 에선 DMS spotlight 가 alt+space 를 쓴다.
