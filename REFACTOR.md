@@ -75,6 +75,7 @@
 ## Phase 7 — 번들 구조 (dotfiles 레이아웃)
 
 - [x] 저장소를 `~/.config/nvim` → **`~/.dotfiles`** 로 이동, `~/.config/nvim` 은 `~/.dotfiles/nvim` 심링크. lazy.nvim 은 링크 너머로 정상 동작 (stdpath · lockfile 경로 확인)
+  - 2026-10-21: 숨김 폴더라 clone 후 안 보이는 불편 때문에 기본 위치를 **`~/Dotfile`** 로 변경
 - [x] `caelestia-backup.bak/` 해체 → 앱별 디렉토리 (`ghostty/ helix/ fish/{mac,linux} starship/ fastfetch/ linux/{hypr,niri,foot,btop,thunar}`). 전부 `git mv` 라 이력 유지 (53 renames)
 - [x] `.bak` 접미사 폐지. 안 쓰는 것은 `archive/` (wezterm.lua · paneru.toml · nvim-typescript.lua)
 - [x] mac fish 를 번들에 편입 (`config.fish` · `fish_plugins` · `functions/fish_greeting.fish`). fisher 산출물(`conf.d/sdk.fish`)·`fish_variables`·terax 통합은 제외

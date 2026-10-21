@@ -6,8 +6,8 @@
 ## 0. 한눈에
 
 ```txt
-1. git clone git@github.com:AmitaWhite/.dotfile.git ~/.dotfiles
-2. ~/.dotfiles/link.sh --dry-run  →  ~/.dotfiles/link.sh     (§1)
+1. git clone git@github.com:AmitaWhite/Dotfile.git ~/Dotfile
+2. ~/Dotfile/link.sh --dry-run  →  ~/Dotfile/link.sh     (§1)
 3. 필수 도구 설치 (§2)  ← 이것만 있으면 nvim 은 뜬다
 4. 언어 툴체인 (§3)      ← 쓰는 언어만
 5. 선택 기능 (§4)        ← 이미지·PDF·DB 등
@@ -16,17 +16,19 @@
 
 ## 1. 심링크 — `link.sh` + `links.txt`
 
-저장소는 `~/.dotfiles` 에 두고, 실제 경로엔 **심링크만** 있다. 어디에 무엇이 걸리는지는 [links.txt](links.txt) 한 파일이 전부다
+저장소는 `~/Dotfile` 에 두고, 실제 경로엔 **심링크만** 있다. 어디에 무엇이 걸리는지는 [links.txt](links.txt) 한 파일이 전부다
 (`<플랫폼> <저장소 경로> <실제 경로> [모드]`, 플랫폼은 `all` / `mac` / `linux`, WSL 은 linux).
-`link.sh` 는 자기 위치(`$0` 의 디렉토리)를 저장소로 보므로 다른 곳에 clone 해도 된다. 아래 `~/.dotfiles` 는 그 자리로 읽으면 된다.
-옮긴 뒤엔 `link.sh` 를 다시 돌리면 옛 위치를 가리키던 링크가 `relink` 된다.
+숨김 폴더로 받아지지 않게 clone 대상을 `~/Dotfile` 로 준다. `link.sh` 는 자기 위치(`$0` 의 디렉토리)를 저장소로 보므로
+위치를 옮겨도 동작하고, 옮긴 뒤 `link.sh` 를 다시 돌리면 옛 위치를 가리키던 링크가 `relink` 된다.
+(예전 위치 `~/.dotfiles` 에서 옮길 때: `mv ~/.dotfiles ~/Dotfile && ~/Dotfile/link.sh`.
+ GitHub 저장소 이름도 `.dotfile` → `Dotfile` 로 바뀌었다 — 옛 주소는 리다이렉트되지만 `git remote set-url origin …/Dotfile.git` 권장)
 
 ```bash
-~/.dotfiles/link.sh --dry-run     # 무엇을 할지만 본다
-~/.dotfiles/link.sh               # 현재 플랫폼 항목 링크
-~/.dotfiles/link.sh --pull        # 도구가 소유한 설정을 시스템 → 저장소로 가져온다 (스냅샷)
-~/.dotfiles/link.sh --restore     # 그 스냅샷을 저장소 → 시스템으로 되돌린다 (재설치 후 1회)
-~/.dotfiles/link.sh --unlink      # 이 스크립트가 건 링크만 해제
+~/Dotfile/link.sh --dry-run     # 무엇을 할지만 본다
+~/Dotfile/link.sh               # 현재 플랫폼 항목 링크
+~/Dotfile/link.sh --pull        # 도구가 소유한 설정을 시스템 → 저장소로 가져온다 (스냅샷)
+~/Dotfile/link.sh --restore     # 그 스냅샷을 저장소 → 시스템으로 되돌린다 (재설치 후 1회)
+~/Dotfile/link.sh --unlink      # 이 스크립트가 건 링크만 해제
 ```
 
 **모드** (4번째 칸, 생략하면 `link`):
@@ -45,7 +47,7 @@
 `pull` 항목은 평소 실행에서 `pull?` 로만 표시되고 건드리지 않는다. 반영하려면:
 
 ```bash
-~/.dotfiles/link.sh --pull && cd ~/.dotfiles && git diff   # 확인 후 커밋
+~/Dotfile/link.sh --pull && cd ~/Dotfile && git diff   # 확인 후 커밋
 ```
 
 ### 1-1. CachyOS + DMS 재설치 후 복원
@@ -54,9 +56,9 @@ DMS 는 첫 실행 때 `~/.config/niri/dms/*` · `settings.json` 을 기본값�
 
 ```bash
 # CachyOS(No desktop) → niri + DMS 설치 → 로그인해서 DMS 를 한 번 띄운 상태에서
-~/.dotfiles/link.sh                       # link 항목 (nvim · foot · fish …)
-~/.dotfiles/link.sh --restore --dry-run   # 무엇을 덮을지 확인
-~/.dotfiles/link.sh --restore             # 기존 파일은 *.pre-restore-<시각> 으로 백업
+~/Dotfile/link.sh                       # link 항목 (nvim · foot · fish …)
+~/Dotfile/link.sh --restore --dry-run   # 무엇을 덮을지 확인
+~/Dotfile/link.sh --restore             # 기존 파일은 *.pre-restore-<시각> 으로 백업
 dms restart                               # 실행 중인 DMS 가 메모리의 기본값으로 덮어쓰지 않게 바로 재시작
 ```
 
@@ -72,7 +74,7 @@ dms restart                               # 실행 중인 DMS 가 메모리의 �
 새 앱을 번들에 넣을 때: 파일을 앱 디렉토리에 두고 `links.txt` 에 한 줄 추가 → `link.sh`.
 
 주의:
-- `~/.config/nvim` 자체가 `~/.dotfiles/nvim` 링크다. lazy.nvim 은 `stdpath("config")` 를 통해 링크 너머의 `lazy-lock.json` 에 쓴다 (확인됨)
+- `~/.config/nvim` 자체가 `~/Dotfile/nvim` 링크다. lazy.nvim 은 `stdpath("config")` 를 통해 링크 너머의 `lazy-lock.json` 에 쓴다 (확인됨)
 - fish 는 `config.fish` · `fish_plugins` · `functions/fish_greeting.fish` 만 링크. `conf.d/`·`fish_variables` 는 fisher/fish 가 만드는 머신 상태라 저장소에 없다. 새 머신에선 fisher 설치 후 `fisher update` 로 `fish_plugins` 목록이 복원된다
 - `linux/` 의 hypr · niri · foot · btop · thunar 는 Wayland 세션에서만 의미 있다. thunar 는 실제 경로가 `~/.config/Thunar`(대문자)
 
