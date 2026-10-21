@@ -19,7 +19,7 @@ qylock_dir="$HOME/.local/share/qylock"
 lock_dir="$HOME/.local/share/quickshell-lockscreen"
 theme="enfield"
 # sdkman 으로 깔 JDK. jdtls 는 JDK 21+ 에서만 돈다 (SETUP §3). 바꾸려면 `sdk list java` 의 Identifier 로
-java_id="${JAVA_ID:-21.0.0.0-graal}"
+java_id="${JAVA_ID:-21.0.12+1.1-tem}"
 
 dry=0
 steps=()
@@ -103,7 +103,9 @@ step_shell() {
   if [ -d "$HOME/.sdkman/candidates/java/$java_id" ]; then
     note "JDK 있음: $java_id (current → $(readlink "$HOME/.sdkman/candidates/java/current" 2>/dev/null))"
   else
-    run bash -c "source \"\$HOME/.sdkman/bin/sdkman-init.sh\" && sdk install java $java_id"
+    # sdkman 기본 설정은 다운로드를 10초에 끊는다(sdkman_curl_max_time=10) — 200MB 넘는 JDK 는 실패한다.
+    # 설정 파일이 init 때 읽히므로 그 *뒤에* 덮어쓴다
+    run bash -c "source \"\$HOME/.sdkman/bin/sdkman-init.sh\" && sdkman_curl_max_time=900 sdkman_auto_answer=true sdk install java $java_id"
   fi
 }
 

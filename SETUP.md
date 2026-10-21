@@ -316,8 +316,10 @@ sdk selfupdate                    # sdkman 자체 갱신
 sdk flush tmp                     # 내려받은 zip 캐시 정리 (~/.sdkman/tmp, 2026-10-22 기준 324MB)
 ```
 
-- 지금 linux: `21.0.0.0-graal` (Oracle GraalVM 21, 2023-09 빌드 — 패치가 멈춘 버전). 갱신하려면
-  `sdk install java 21.0.12+1.1-tem` 같은 최신 21 을 깔고 `sdk default`. `setup.sh` 의 `java_id` 도 같이 바꿀 것
+- 지금 linux: `21.0.12+1.1-tem` (Eclipse Temurin 21, 2026-10-22 교체 — 이전 `21.0.0.0-graal` 은 2023-09 빌드로 패치가 멈춰 있었다).
+  버전을 바꾸면 `setup.sh` 의 `java_id` 도 같이 바꿀 것
+- **다운로드가 `Download has failed` 로 끝나면**: sdkman 기본 설정이 다운로드를 10초에 끊는다(`sdkman_curl_max_time=10`).
+  `sed -i 's/^sdkman_curl_max_time=.*/sdkman_curl_max_time=600/' ~/.sdkman/etc/config` (setup.sh 는 설치할 때만 늘려 쓴다)
 - **jdtls 는 JDK 21 이상**에서만 돈다. JDK 를 바꾼 뒤 nvim 을 새 fish 터미널에서 열어야 반영된다 (GUI 런처 ✘ — §3)
 - sdkman 이 설치한 것은 `~/.sdkman` 한 곳에 모인다. 통째로 지우면 깨끗이 제거된다
 
