@@ -59,7 +59,6 @@ pacman  fd
 pacman  fzf
 pacman  luarocks
 pacman  npm
-pacman  biome                       # TS/JS 린트 · 포맷
 pacman  helix
 # JDK 는 sdkman(스크립트 설치, SETUP §3), jdtls 는 mason 이 설치한다 — pacman 아님
 

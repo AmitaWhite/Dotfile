@@ -78,7 +78,7 @@ dms restart                               # 실행 중인 DMS 가 메모리의 �
 
 주의:
 - `~/.config/nvim` 자체가 `~/Dotfile/nvim` 링크다. lazy.nvim 은 `stdpath("config")` 를 통해 링크 너머의 `lazy-lock.json` 에 쓴다 (확인됨)
-- fish 는 `config.fish` · `fish_plugins` · `functions/fish_greeting.fish` 만 링크. `conf.d/`·`fish_variables` 는 fisher/fish 가 만드는 머신 상태라 저장소에 없다. 새 머신에선 fisher 설치 후 `fisher update` 로 `fish_plugins` 목록이 복원된다
+- fish 는 `config.fish` · `fish_plugins` · `functions/fish_greeting.fish` 만 링크. `conf.d/`·`fish_variables` 는 fisher/fish 가 만드는 머신 상태라 저장소에 없다. 새 머신에선 fisher 설치 후 `fisher update` 로 `fish_plugins` 목록이 복원된다 (§11, linux 는 `setup.sh shell` 이 해 준다)
 - `linux/` 의 niri · dms · foot · btop · kime 는 Wayland 세션에서만 의미 있다 (hypr 는 링크하지 않고 보관만). 파일 관리자는 nautilus — thunar 설정은 `archive/thunar`
 
 ## 2. 필수 — 없으면 `:checkhealth` 가 빨갛다
@@ -214,6 +214,7 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
 | --- | --- |
 | `packages` | [linux/packages.txt](linux/packages.txt) 에서 빠진 것만 `pacman -S --needed` → `paru -S --needed`. `dms` 항목은 확인만 |
 | `link` | `link.sh` — nvim · foot · fish · kime … 심링크 |
+| `shell` | fisher + `fish_plugins` 의 플러그인, sdkman + JDK (`JAVA_ID=… setup.sh shell` 로 버전 변경) — §11 |
 | `restore` | `link.sh --restore` — DMS · niri 설정 스냅샷(§1-1). 덮기 전에 묻는다 |
 | `qylock` | 로그인 · 잠금 화면 (아래). sudo 가 필요하다 |
 
@@ -272,4 +273,51 @@ faillock --user $USER     # 실패 기록 확인 (Valid V 가 3개면 잠긴 상
 
 10분 기다리면 풀린다. 횟수 · 시간은 `/etc/security/faillock.conf` 의 `deny` · `unlock_time` (기본값 유지 중).
 틀린 적이 없는데 안 풀리면 위의 PAM 멈춤 — 패치가 적용됐는지 `grep -c 'dotfiles patch' ~/.local/share/quickshell-lockscreen/shim/SddmShim.qml`.
+
+## 11. 셸 도구 관리 — fisher · sdkman
+
+둘 다 pacman 이 아니라 **자기 설치 스크립트**로 깔리고, 저장소엔 "무엇을 깔지" 만 둔다.
+설치는 linux 면 `linux/setup.sh shell`, mac 이면 아래 명령을 직접.
+
+### fisher — fish 플러그인 매니저
+
+목록은 `fish_plugins` 한 파일 (`fish/{mac,linux}/fish_plugins` → `~/.config/fish/fish_plugins` 심링크).
+fisher 가 설치 · 삭제할 때 이 파일을 고쳐 쓰는데, 심링크 너머 저장소 파일이 바뀐다 → `git diff` 로 보이고 커밋하면 된다.
+플러그인이 만드는 `conf.d/` · `functions/` · `completions/` 는 머신 상태라 저장소에 없다.
+
+```fish
+# 처음 설치 — fish_plugins 에 fisher 자신도 있어서 update 한 번이면 목록 전체가 깔린다
+curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
+
+fisher list                       # 설치된 것
+fisher install <user/repo>        # 추가 (fish_plugins 에 한 줄 추가됨 → 커밋)
+fisher remove <user/repo>         # 삭제 (fish_plugins 에서 빠짐 → 커밋)
+fisher update                     # fish_plugins 에 맞춰 설치 · 갱신 · 정리
+```
+
+지금 쓰는 플러그인: `jorgebucaran/fisher`(자신), `reitzig/sdkman-for-fish`(아래 sdkman 을 fish 에서 쓰게 — `conf.d/sdk.fish` 가 초기화).
+mac 쪽은 `@v1.4.0` 으로 버전 고정, linux 는 최신.
+
+### sdkman — JDK 버전 관리
+
+```bash
+# 처음 설치 — rcupdate=false: bashrc · zshrc 를 고치지 않는다 (fish 는 sdkman-for-fish 가 초기화)
+curl -s "https://get.sdkman.io?rcupdate=false" | bash
+```
+
+```fish
+sdk list java                     # 설치 가능한 JDK (Identifier 열을 쓴다). > 는 사용 중, * 는 설치됨
+sdk install java 21.0.12+1.1-tem  # 설치 (마지막에 default 로 할지 묻는다)
+sdk default java <Identifier>     # 기본 JDK 바꾸기 — ~/.sdkman/candidates/java/current 링크가 바뀐다
+sdk use java <Identifier>         # 이 셸에서만 잠깐
+sdk current                       # 지금 쓰는 것
+sdk uninstall java <Identifier>
+sdk selfupdate                    # sdkman 자체 갱신
+sdk flush tmp                     # 내려받은 zip 캐시 정리 (~/.sdkman/tmp, 2026-10-22 기준 324MB)
+```
+
+- 지금 linux: `21.0.0.0-graal` (Oracle GraalVM 21, 2023-09 빌드 — 패치가 멈춘 버전). 갱신하려면
+  `sdk install java 21.0.12+1.1-tem` 같은 최신 21 을 깔고 `sdk default`. `setup.sh` 의 `java_id` 도 같이 바꿀 것
+- **jdtls 는 JDK 21 이상**에서만 돈다. JDK 를 바꾼 뒤 nvim 을 새 fish 터미널에서 열어야 반영된다 (GUI 런처 ✘ — §3)
+- sdkman 이 설치한 것은 `~/.sdkman` 한 곳에 모인다. 통째로 지우면 깨끗이 제거된다
 

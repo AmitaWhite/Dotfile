@@ -2,7 +2,7 @@
 # CachyOS(No desktop) + DankMaterialShell(niri) 새 설치를 이 저장소 상태로 맞춘다.
 # 순서와 이유는 SETUP.md §10. 여러 번 돌려도 안전하다 — 이미 된 단계는 건너뛴다.
 #
-#   linux/setup.sh                 전체 (packages → link → restore → qylock)
+#   linux/setup.sh                 전체 (packages → link → shell → restore → qylock)
 #   linux/setup.sh qylock          특정 단계만 (여러 개 가능)
 #   linux/setup.sh --dry-run       무엇을 할지만 출력
 #
@@ -18,18 +18,20 @@ qylock_repo="https://github.com/Darkkal44/qylock.git"
 qylock_dir="$HOME/.local/share/qylock"
 lock_dir="$HOME/.local/share/quickshell-lockscreen"
 theme="enfield"
+# sdkman 으로 깔 JDK. jdtls 는 JDK 21+ 에서만 돈다 (SETUP §3). 바꾸려면 `sdk list java` 의 Identifier 로
+java_id="${JAVA_ID:-21.0.0.0-graal}"
 
 dry=0
 steps=()
 for a in "$@"; do
   case "$a" in
     --dry-run) dry=1 ;;
-    packages|link|restore|qylock) steps+=("$a") ;;
+    packages|link|shell|restore|qylock) steps+=("$a") ;;
     -h|--help) sed -n '2,10p' "$0"; exit 0 ;;
     *) echo "unknown: $a" >&2; exit 2 ;;
   esac
 done
-[ ${#steps[@]} -eq 0 ] && steps=(packages link restore qylock)
+[ ${#steps[@]} -eq 0 ] && steps=(packages link shell restore qylock)
 
 say()  { printf '\n\033[1;36m== %s\033[0m\n' "$*"; }
 note() { printf '   %s\n' "$*"; }
@@ -78,7 +80,34 @@ step_link() {
   if [ "$dry" = 1 ]; then "$repo/link.sh" --dry-run; else "$repo/link.sh"; fi
 }
 
-# ---- 3. DMS · niri 설정 복원 ----
+# ---- 3. 셸 도구 — fisher 플러그인 · sdkman + JDK (SETUP §11) ----
+# fish_plugins 는 link 단계에서 걸린다. fisher 는 그 목록을 읽어 설치한다.
+step_shell() {
+  say "셸 도구 — fisher · sdkman · JDK"
+
+  if fish -c 'functions -q fisher' 2>/dev/null; then
+    note "fisher 있음 — 플러그인: $(fish -c 'fisher list' 2>/dev/null | tr '\n' ' ')"
+  else
+    # fisher 자신도 fish_plugins 에 있으므로 한 번 source 한 뒤 update 하면 목록 전체가 깔린다
+    run fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update'
+  fi
+
+  if [ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]; then
+    note "sdkman 있음"
+  else
+    # rcupdate=false: bashrc · zshrc 를 고치지 않는다 (fish 는 sdkman-for-fish 플러그인이 초기화)
+    printf '   $ curl -s "https://get.sdkman.io?rcupdate=false" | bash\n'
+    [ "$dry" = 1 ] || curl -s "https://get.sdkman.io?rcupdate=false" | bash
+  fi
+
+  if [ -d "$HOME/.sdkman/candidates/java/$java_id" ]; then
+    note "JDK 있음: $java_id (current → $(readlink "$HOME/.sdkman/candidates/java/current" 2>/dev/null))"
+  else
+    run bash -c "source \"\$HOME/.sdkman/bin/sdkman-init.sh\" && sdk install java $java_id"
+  fi
+}
+
+# ---- 4. DMS · niri 설정 복원 ----
 step_restore() {
   say "DMS · niri 설정 복원 (link.sh --restore)"
   "$repo/link.sh" --restore --dry-run | grep -v '^same' || true
@@ -95,7 +124,7 @@ step_restore() {
   fi
 }
 
-# ---- 4. qylock — SDDM 로그인 화면 + quickshell 잠금 화면 ----
+# ---- 5. qylock — SDDM 로그인 화면 + quickshell 잠금 화면 ----
 # qylock 의 sddm.sh / quickshell.sh 는 대화형(테마 선택)이라 부르지 않고, 하는 일만 그대로 한다.
 step_qylock() {
   say "qylock ($theme) — SDDM 테마 · 잠금 화면 · 패치"
@@ -153,4 +182,4 @@ note "1. DMS 설정 → Power → Custom Power Actions 의 잠금 명령 = ~/.lo
 note "   · Lock before suspend 켜짐  (둘 다 restore 한 settings.json 에 들어 있다)"
 note "2. Ctrl+Cmd+Q → qylock 이 뜨는지, 덮개 닫았다 열면 qylock 인지"
 note "3. kime: 새 터미널에서 우측 Command 로 한영 전환 (자동 시작은 kime 패키지가 등록)"
-note "4. nvim 첫 실행 → :Lazy sync → :checkhealth (SETUP §6)"
+note "4. 새 fish 에서 java -version (sdkman-for-fish 가 초기화) → nvim 첫 실행 → :Lazy sync → :checkhealth (SETUP §6)"
