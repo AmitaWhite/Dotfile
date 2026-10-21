@@ -198,6 +198,8 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
 
 ```txt
 1. CachyOS 설치 프로그램 → 데스크톱 "No desktop"
+   (MacBook Air 2014: Broadcom Wi-Fi 는 기본으로 안 잡힌다. 휴대폰 USB 테더링으로 연결하면
+    설치 프로그램이 하드웨어를 감지해 broadcom-wl-dkms 를 자동으로 넣는다 — packages.txt 엔 적지 않음)
 2. curl -fsSL https://install.danklinux.com | sh         DMS 설치 프로그램 (niri · quickshell · ghostty · matugen …)
 3. 재부팅 → niri 세션에 로그인해 DMS 를 한 번 띄운다      ~/.config/niri/dms/* · settings.json 생성
 4. git clone git@github.com:AmitaWhite/Dotfile.git ~/Dotfile
