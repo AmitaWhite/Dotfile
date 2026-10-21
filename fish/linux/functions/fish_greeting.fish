@@ -1,5 +1,5 @@
 function fish_greeting
-    echo -ne '\x1b[38;5;16m' # Set colour to primary
+    set_color cyan # 팔레트 6 = DMS primary (256색 16번은 DMS 가 정의하지 않아 검정이 된다)
     # echo '     ______           __          __  _       '
     # echo '    / ____/___ ____  / /__  _____/ /_(_)___ _ '
     # echo '   / /   / __ `/ _ \/ / _ \/ ___/ __/ / __ `/ '

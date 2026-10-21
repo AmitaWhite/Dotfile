@@ -4,7 +4,10 @@
     "display": {
         "separator": "  ",
         "color": "white",
-        "constants": ["\u001b[37m", "\u001b[38;5;16m", "\u001b[38;5;17m", "\u001b[38;5;18m"]
+        // 색은 전부 터미널 16색 팔레트 번호로만 쓴다 → DMS 가 생성한 팔레트(foot dank-colors.ini · ghostty dankcolors)를 그대로 따라간다.
+        // 38;5;16 이상(256색)은 DMS 가 정의하지 않아 xterm 기본값(검정 · 남색)이 나온다 — 쓰지 말 것.
+        //   $1 = 7 (본문)   $2 = 6 (primary)   $3 = 4   $4 = 1
+        "constants": ["\u001b[37m", "\u001b[36m", "\u001b[34m", "\u001b[31m"]
     },
     "modules": [
         "break",
