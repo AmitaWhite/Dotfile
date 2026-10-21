@@ -22,7 +22,8 @@
 ```bash
 ~/.dotfiles/link.sh --dry-run     # 무엇을 할지만 본다
 ~/.dotfiles/link.sh               # 현재 플랫폼 항목 링크
-~/.dotfiles/link.sh --pull        # 도구가 소유한 설정을 시스템 → 저장소로 가져온다
+~/.dotfiles/link.sh --pull        # 도구가 소유한 설정을 시스템 → 저장소로 가져온다 (스냅샷)
+~/.dotfiles/link.sh --restore     # 그 스냅샷을 저장소 → 시스템으로 되돌린다 (재설치 후 1회)
 ~/.dotfiles/link.sh --unlink      # 이 스크립트가 건 링크만 해제
 ```
 
@@ -30,8 +31,11 @@
 
 | 모드 | 소유자 | 동작 |
 | --- | --- | --- |
-| `link` | 저장소 | 실제 경로에 심링크를 건다 |
-| `pull` | 도구 | 링크하지 않는다. `--pull` 일 때만 시스템 → 저장소로 복사 |
+| `link` | 저장소 | 실제 경로에 심링크를 건다. 저장소가 진실 — 시스템에서 바꾸면 되돌아간다 |
+| `pull` | 도구 | 링크하지 않는다. `--pull` 이면 시스템 → 저장소(스냅샷), `--restore` 면 저장소 → 시스템(1회 복원) |
+
+`pull` 은 **고정이 아니라 스냅샷**이다. 평소엔 DMS 설정 화면에서 마음껏 바꾸고, 남겨두고 싶을 때 `--pull` → 커밋.
+저장소엔 마지막으로 찍은 상태가 남고, 포맷 후엔 `--restore` 로 그 상태에서 다시 시작한다. 그 뒤로는 다시 도구가 주인이다.
 
 `pull` 이 필요한 이유: DankMaterialShell 처럼 **도구가 설정 파일을 직접 쓰는** 경우, 저장 시
 임시 파일 + rename 으로 **심링크가 일반 파일로 대체**된다. 그러면 다음 `link.sh` 가 그걸 실파일로 보고
@@ -41,6 +45,22 @@
 ```bash
 ~/.dotfiles/link.sh --pull && cd ~/.dotfiles && git diff   # 확인 후 커밋
 ```
+
+### 1-1. CachyOS + DMS 재설치 후 복원
+
+DMS 는 첫 실행 때 `~/.config/niri/dms/*` · `settings.json` 을 기본값으로 만든다. 복원은 **그 다음에** 한다.
+
+```bash
+# CachyOS(No desktop) → niri + DMS 설치 → 로그인해서 DMS 를 한 번 띄운 상태에서
+~/.dotfiles/link.sh                       # link 항목 (nvim · foot · fish …)
+~/.dotfiles/link.sh --restore --dry-run   # 무엇을 덮을지 확인
+~/.dotfiles/link.sh --restore             # 기존 파일은 *.pre-restore-<시각> 으로 백업
+dms restart                               # 실행 중인 DMS 가 메모리의 기본값으로 덮어쓰지 않게 바로 재시작
+```
+
+복원 대상 (`links.txt` 의 `pull`): niri `config.kdl`, `dms/binds.kdl` · `layout.kdl` · `input.kdl`, DMS `settings.json` · `plugin_settings.json`.
+색(`colors.kdl`, `dank-colors.ini`, ghostty `dankcolors` …)은 배경화면에서 다시 생성되므로 담지 않는다.
+`outputs.kdl` 은 모니터마다 달라 담지 않는다 — DMS 디스플레이 설정에서 새로 잡는다.
 
 동작 규칙:
 - 이미 올바른 링크면 `ok`, 다른 곳을 가리키는 링크면 `relink`(백업 없음 — 링크는 데이터가 아니다)

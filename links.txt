@@ -2,7 +2,8 @@
 # 플랫폼: all | mac | linux   (WSL 은 linux)
 # 모드  : link(기본) = 저장소가 소유, 심링크를 건다
 #         pull       = 도구가 소유. 심링크를 걸면 도구의 저장이 날아가므로 링크하지 않고,
-#                      ./link.sh --pull 로 시스템 → 저장소 방향으로만 가져온다.
+#                      ./link.sh --pull 로 시스템 → 저장소 방향으로만 가져온다 (스냅샷).
+#                      재설치 후엔 ./link.sh --restore 로 한 번 되돌려 놓는다.
 # 실제 경로가 이미 실파일이면 덮어쓰지 않고 *.pre-link-<시각> 으로 옮긴다.
 
 # ---- 공통 ----
@@ -30,5 +31,12 @@ linux  linux/btop/themes/caelestia.theme        ~/.config/btop/themes/caelestia.
 # niri config.kdl 은 DankMaterialShell 이 생성·관리한다 (Material3 색상 반영 포함).
 # 심링크를 걸면 DMS 저장 시 심링크가 일반 파일로 바뀌고 다음 link.sh 가 저장소 것으로 되돌린다.
 linux  linux/niri/config.kdl                    ~/.config/niri/config.kdl                 pull
+# DMS 설정 화면이 쓰는 파일 중 "내가 고른 값" 만. 색(colors.kdl, dank-colors.*)은 배경화면에서 매번 다시 만든다.
+# 키바인드 · gaps · 터치패드는 settings.json 이 아니라 이 kdl 들 자체가 저장 위치다.
+linux  linux/niri/dms/binds.kdl                 ~/.config/niri/dms/binds.kdl              pull
+linux  linux/niri/dms/layout.kdl                ~/.config/niri/dms/layout.kdl             pull
+linux  linux/niri/dms/input.kdl                 ~/.config/niri/dms/input.kdl              pull
+linux  linux/dms/settings.json                  ~/.config/DankMaterialShell/settings.json pull
+linux  linux/dms/plugin_settings.json           ~/.config/DankMaterialShell/plugin_settings.json pull
 linux  linux/thunar/uca.xml                     ~/.config/Thunar/uca.xml
 linux  linux/thunar/thunar-volman.xml           ~/.config/Thunar/thunar-volman.xml

@@ -120,13 +120,44 @@ nvim 0.12.4 가 `libtree-sitter.0.26.dylib` 에 동적 링크돼 있어 nvim 이
 - [x] `links.txt` 에서 `linux/hypr` 링크 제거 — hyprland 시절 설정. 파일은 `linux/hypr/` 에 보관
 - [x] `niri/config.kdl` 을 `pull` 모드로 전환
 - [x] btop `caelestia.theme` 는 유지 — 유물이 아니라 `btop.conf` 의 `color_theme = "caelestia"` 가 참조한다
-- [ ] **리눅스에서 확인할 것** (이 세션은 맥이라 실측 불가):
-  - [ ] `./link.sh --pull` 로 DMS 의 `config.kdl` 을 저장소에 반영하고 커밋
-  - [ ] DMS 의 Material3 색상이 **터미널 설정도 건드리는지** — `foot.ini` 에 `[colors]` 섹션이 있어
-        DMS 가 거기 쓴다면 `foot.ini` 도 `pull` 이거나 색상 부분만 분리해야 한다. ghostty 도 마찬가지
-  - [ ] DMS 가 관리하는 파일이 `config.kdl` 말고 더 있는지 (색상 파일 · 상태 파일의 위치)
-  - [ ] 나머지 `linux` 항목 경로 검증 — `~/.config/Thunar`(대문자) · `fish/linux` · fastfetch · foot
-  - [ ] `~/.config/niri/` 에 남은 `*.pre-link-*` 백업 확인 (DMS 가 쓴 내용이 거기 있다)
+- [x] **리눅스에서 확인할 것** — 2026-10-21 CachyOS(niri 26.04 · dms-shell 1.6.3) 에서 실측:
+  - [x] DMS 의 `config.kdl` 을 저장소에 반영 (`61e93ad`). noctalia 시절 설정을 버리고 DMS 템플릿으로 교체
+  - [x] DMS 는 터미널 설정을 **직접 고치지 않고 색 파일을 따로 생성**한다 — `~/.config/foot/dank-colors.ini`,
+        `~/.config/ghostty/themes/dankcolors`. 그래서 `foot.ini` 는 `include`, ghostty 는 `theme = dankcolors` 로
+        참조만 하면 되고 `link` 로 유지 (`95457a8`)
+  - [x] DMS 가 관리하는 파일 전수 확인 → 아래 "Phase 8-2"
+  - [x] 나머지 `linux` 항목 경로 — `link.sh --dry-run` 전부 `ok`
+  - [ ] `~/.config/niri/config.kdl.pre-link-*` 등 남은 백업 정리 (noctalia 시절 내용 — 필요 없으면 삭제)
+
+### Phase 8-2 — DMS 설정 스냅샷 · 복원 (`--restore`)
+
+**목표**: DMS 설정 화면에서 자유롭게 바꾸되, 포맷 후 재설치하면 그 상태에서 다시 시작한다.
+`pull` 은 시스템 → 저장소 한 방향뿐이라 **되돌려 놓을 방법이 없었다**.
+
+DMS 가 쓰는 파일 분류 (실측):
+
+| 파일 | 담는가 | 이유 |
+| --- | --- | --- |
+| `DankMaterialShell/settings.json` · `plugin_settings.json` | ✅ pull | 내가 고른 값. 바 · 런처 · 스킴 · 커서 … |
+| `niri/dms/binds.kdl` | ✅ pull | 키바인드 전부. `config.kdl` 엔 `binds {}` 가 없다 (→ niri 단독 실행 불가, DMS 전제로 결정) |
+| `niri/dms/layout.kdl` · `input.kdl` | ✅ pull | gaps · 터치패드. settings.json 에 없고 **이 kdl 자체가 저장 위치** |
+| `niri/dms/colors.kdl`, `foot/dank-colors.ini`, ghostty `dankcolors`, gtk `dank-colors.css` … | ❌ | 배경화면에서 매번 재생성 |
+| `niri/dms/alttab.kdl` · `cursor.kdl` | ❌ | settings.json(`cornerRadius` · `cursorSettings`)에서 파생 |
+| `niri/dms/outputs.kdl` | ❌ | 모니터마다 다르다 |
+| `niri/dms/windowrules.kdl` · `wpblur.kdl` | ❌ | 아래 참고 |
+| `~/.local/state/DankMaterialShell/session.json` | ❌ | 상태 (라이트 모드 여부 · 배경화면 경로 · 런처 기록) |
+
+- [x] `link.sh --restore`: pull 항목만 저장소 → 시스템 1회 복사. 동일하면 `same`, 저장소에 없으면 `SKIP`,
+      대상이 심링크면 `WARN` 후 건너뜀, 기존 파일은 `.pre-restore-<시각>` 백업. `--pull` 과 동시 사용 금지
+- [x] 샌드박스 9개 시나리오 (스냅샷 없음 SKIP · 첫 pull · pull 멱등 · dry-run 무변경 · 기본값 위 restore+백업 ·
+      restore 멱등 · 내용 일치 · 심링크 WARN · 평소 실행 무간섭 · 동시 옵션 거부)
+- [x] 실시스템 `--pull` 로 첫 스냅샷, `--restore --dry-run` 전부 `same`
+- [ ] 실제 재설치 때 `--restore` → `dms restart` 순서가 충분한지 확인 (DMS 실행 중 복원의 안전성은 미검증)
+
+**`windowrules.kdl` · `wpblur.kdl` 이 include 되지 않은 이유**: 누락이 아니다. DMS 는 각 설정 탭이 열릴 때
+`config.kdl` 에 해당 include 가 있는지 grep 하고, 없으면 그 탭에 "설정" 버튼을 띄워 누르면 include 줄을 덧붙인다
+(바이너리 내장 QML `checkIncludeStatus` / `fixInclude`). 즉 그 기능(창 규칙 · 배경 blur)을 처음 쓸 때 DMS 가
+`config.kdl` 을 고치고, 그 변경은 다음 `--pull` 에 잡힌다.
 
 ---
 
