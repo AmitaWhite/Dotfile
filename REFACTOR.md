@@ -164,6 +164,33 @@ DMS 가 쓰는 파일 분류 (실측):
 
 ---
 
+## Phase 9 — 로그인 · 잠금 화면과 새 설치 스크립트 (2026-10-21 ~ 22)
+
+**증상**: 잠금(Ctrl+Cmd+Q) 후 덮개를 닫았다 열면 가끔 비밀번호를 쳐도 안 풀려 재부팅해야 했다.
+
+**조사**:
+- 잠금 화면은 SDDM 이 아니라 qylock 의 quickshell 잠금 프로그램이 SDDM 테마를 흉내 내는 것 (`SddmShim.qml`)
+- 10/21 16:35 잠금 → 21:28 재개 → 21:29 재부팅 사례: 그 사이 PAM 인증 실패 로그가 **0건**. 틀린 게 아니라 인증이 진행되지 않았다
+- `SddmShim.login()` 은 빈 비밀번호로도 `pam.start()` 를 부른다. PAM 이 `Password:` 를 묻는데 `pendingPassword` 가 빈 문자열이라
+  답하지 않고, 이후의 `start()` 는 이미 active 라 아무 일도 안 한다 → **영구 대기**. 잠금 없는 quickshell 하네스로 재현
+- 덤: 잠글 때마다 DMS 도 자기 잠금을 시도해 niri 가 거절(`refusing lock as already locked`) — 두 잠금 프로그램의 경합
+
+**수정**:
+- [x] `linux/qylock/lockscreen-pam-hang.patch` — 빈 Enter 무시, 대기 중 PAM 이면 그 세션에 답함, 확인 중엔 결과를 기다림.
+      하네스: 빈 Enter → 틀림 → 확인 중 연타 → 재시도 모두 `completed`, 멈춤 0. 실기기 테스트 창(`QS_TESTING=1`) · 실제 잠금 확인
+- [x] DMS 를 외부 잠금으로: `customPowerActionLock` = `lock.sh`, `lockBeforeSuspend` = true, 단축키는 `dms ipc call lock lock`.
+      경합 해소, 덮개만 닫아도 잠김 (DMS 소스에서 `spawnCustomLocker` · `handleLoginctlCustomLock` 경로 확인)
+- [x] 패키지 정리: Qt5 일체(`qt5-graphicaleffects` 등 4개)와 `qt6-multimedia-gstreamer`(+gst-plugins 등 5개) 제거.
+      테마는 `QtVersion=6`, 영상은 FFmpeg 엔진. 제거 전후 `sddm-greeter-qt6 --test-mode` 출력 동일, 잠금 화면 영상 정상
+- [x] `linux/packages.txt` · `linux/setup.sh` — pacman 로그의 직접 설치 이력으로 목록화, 빠진 것(JetBrains Mono Nerd · wl-clipboard ·
+      direnv)은 설치. 처음 설치 시나리오(임시 HOME)에서 잠금 화면이 현재 설치본과 동일, 재실행은 전 단계 skip
+
+**사고 기록**:
+- 패치 검증에 틀린 비밀번호 2번을 썼는데, 이어진 사용자 테스트의 1번과 합쳐 `pam_faillock`(3회 → 10분)에 걸렸다.
+  비밀번호 검증 테스트는 틀린 시도 횟수를 센다 — 실계정으로는 하지 말 것 (SETUP §10-4)
+- 설치 시뮬레이션에서 qylock clone(영상 포함 1.2GB)을 `/tmp` 로 복사 → `/tmp` 는 **tmpfs(RAM)** 라 RAM 4GB 기기에서
+  systemd-oomd 가 앱을 강제 종료. 큰 파일은 복사하지 말고 링크하거나 디스크(`~/.cache`)에서 할 것
+
 ## 결정 기록 (D)
 
 | # | 주제 | 결정 | 날짜 |

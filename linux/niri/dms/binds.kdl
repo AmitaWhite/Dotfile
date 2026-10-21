@@ -129,7 +129,7 @@ binds {
     Mod+WheelScrollRight { focus-column-right; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Shift+E { quit; }
-    Mod+Ctrl+Q hotkey-overlay-title="lock screen" { spawn "~/.local/share/quickshell-lockscreen/lock.sh"; }
+    Mod+Ctrl+Q hotkey-overlay-title="lock screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
     Mod+E hotkey-overlay-title="open file manager" { spawn "nautilus"; }
     Mod+T hotkey-overlay-title="terminal" { spawn "foot"; }
     Mod+W hotkey-overlay-title="open zen brownser" { spawn "zen-browser"; }

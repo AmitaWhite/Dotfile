@@ -14,6 +14,9 @@
 6. nvim 첫 실행 → :Lazy sync → :checkhealth (§6)
 ```
 
+**CachyOS + DankMaterialShell(niri) 를 새로 깔 때는 §10 의 `linux/setup.sh` 하나로** 패키지 · 링크 · DMS 설정 복원 ·
+로그인/잠금 화면까지 맞춘다 (위 2~5 의 리눅스 부분을 포함).
+
 ## 1. 심링크 — `link.sh` + `links.txt`
 
 저장소는 `~/Dotfile` 에 두고, 실제 경로엔 **심링크만** 있다. 어디에 무엇이 걸리는지는 [links.txt](links.txt) 한 파일이 전부다
@@ -76,7 +79,7 @@ dms restart                               # 실행 중인 DMS 가 메모리의 �
 주의:
 - `~/.config/nvim` 자체가 `~/Dotfile/nvim` 링크다. lazy.nvim 은 `stdpath("config")` 를 통해 링크 너머의 `lazy-lock.json` 에 쓴다 (확인됨)
 - fish 는 `config.fish` · `fish_plugins` · `functions/fish_greeting.fish` 만 링크. `conf.d/`·`fish_variables` 는 fisher/fish 가 만드는 머신 상태라 저장소에 없다. 새 머신에선 fisher 설치 후 `fisher update` 로 `fish_plugins` 목록이 복원된다
-- `linux/` 의 niri · dms · foot · btop · kime · thunar 는 Wayland 세션에서만 의미 있다 (hypr 는 링크하지 않고 보관만). thunar 는 실제 경로가 `~/.config/Thunar`(대문자)
+- `linux/` 의 niri · dms · foot · btop · kime 는 Wayland 세션에서만 의미 있다 (hypr 는 링크하지 않고 보관만). 파일 관리자는 nautilus — thunar 설정은 `archive/thunar`
 
 ## 2. 필수 — 없으면 `:checkhealth` 가 빨갛다
 
@@ -177,8 +180,9 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
 ## 9. 환경별 주의
 
 - **macOS (Intel)**: Homebrew 가 x86_64 지원을 종료해 bottle 이 없는 포뮬러는 소스 빌드로 빠진다. nvim 런타임 의존성(tree-sitter, libuv)은 단독 업그레이드 금지 — `brew upgrade` 로 함께.
-- **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrainsmono-nerd`, `wl-clipboard`.
-- **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 DMS 설정의 시작 앱에 `kime` 등록.
+- **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrains-mono-nerd`, `wl-clipboard`. 고른 패키지 전체는 [linux/packages.txt](linux/packages.txt) (§10).
+- **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 kime 패키지가 `/etc/xdg/autostart/kime.desktop` 로 등록한다
+  (지금 기기엔 DMS 시작 앱으로 만든 `~/.config/autostart/kime.desktop` 가 이를 덮지만 결과는 같다 — 따로 할 일 없음).
   설정은 `linux/kime/config.yaml` 링크 — **한영 = 우측 Command(`SuperR`)**, 우측 Option 은 일반 Alt 로 돌려줌.
   - `global_hotkeys` 는 맵 통째 교체라 기본 항목(Hangul · Super-Space · Esc …)도 함께 적혀 있다. 키 이름은 kime 엔진 기준(`SuperR` `AltR` `ControlR` …)
   - 우측 Command 는 niri 의 Mod 이기도 하다. 단독으로 눌렀다 떼면 한영, 누른 채 다른 키면 niri 단축키
@@ -187,3 +191,82 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
     Chrome · Electron · 일부 Qt 앱에서 한글이 안 써지면 그때 환경변수 / 앱 플래그를 손본다
 - **WSL(Arch)**: 클립보드 `win32yank`, 이미지 렌더는 Windows Terminal 이 kitty protocol 을 지원하지 않아 ✘. `:checkhealth snacks` 로 확인.
 - 다크/라이트: nvim 이 **터미널 배경색**을 감지한다. 터미널 테마가 OS 를 따라가게 설정해야 nvim 도 따라간다 (ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`).
+
+## 10. CachyOS + DankMaterialShell 새 설치 — `linux/setup.sh`
+
+MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본 파일을 만든 **뒤에** 저장소 상태로 덮는다.
+
+```txt
+1. CachyOS 설치 프로그램 → 데스크톱 "No desktop"
+2. curl -fsSL https://install.danklinux.com | sh         DMS 설치 프로그램 (niri · quickshell · ghostty · matugen …)
+3. 재부팅 → niri 세션에 로그인해 DMS 를 한 번 띄운다      ~/.config/niri/dms/* · settings.json 생성
+4. git clone git@github.com:AmitaWhite/Dotfile.git ~/Dotfile
+5. ~/Dotfile/linux/setup.sh --dry-run  →  ~/Dotfile/linux/setup.sh
+6. 재부팅 (SDDM 로그인 화면 확인)
+```
+
+`setup.sh` 가 하는 일 (단계 이름으로 골라 돌릴 수 있다: `setup.sh qylock`). 여러 번 돌려도 이미 된 단계는 건너뛴다.
+
+| 단계 | 내용 |
+| --- | --- |
+| `packages` | [linux/packages.txt](linux/packages.txt) 에서 빠진 것만 `pacman -S --needed` → `paru -S --needed`. `dms` 항목은 확인만 |
+| `link` | `link.sh` — nvim · foot · fish · kime … 심링크 |
+| `restore` | `link.sh --restore` — DMS · niri 설정 스냅샷(§1-1). 덮기 전에 묻는다 |
+| `qylock` | 로그인 · 잠금 화면 (아래). sudo 가 필요하다 |
+
+### 10-1. 패키지 목록 — `linux/packages.txt`
+
+"내가 고른 것" 만 적는다. CachyOS 설치 프로그램의 기본 패키지와 의존성으로 딸려 오는 것은 적지 않는다.
+줄마다 왜 깔았는지 주석이 있다. 새로 깔면 여기에 한 줄 추가 — 그래야 다음 설치에서도 따라온다.
+(목록은 `/var/log/pacman.log` 의 직접 설치 이력에서 뽑았다: `grep "Running 'pacman -S" /var/log/pacman.log`)
+
+- pacman 외 설치: JDK 는 sdkman(§3), jdtls 는 mason 이 넣는다
+- 지운 것과 이유: `firefox`(zen) · `alacritty`(foot · ghostty) · `qt5-graphicaleffects` 와 Qt5 일체 · `qt6-multimedia-gstreamer`(아래)
+
+### 10-2. 로그인 · 잠금 화면 — qylock
+
+[Darkkal44/qylock](https://github.com/Darkkal44/qylock) 의 `enfield` 테마. **둘은 다른 프로그램이 같은 테마를 띄우는 것**이다.
+
+| | 프로그램 | 위치 |
+| --- | --- | --- |
+| 로그인 화면 | SDDM (Qt6 greeter) | 테마 `/usr/share/sddm/themes/enfield`, 지정 `/etc/sddm.conf.d/theme.conf` |
+| 잠금 화면 | quickshell (`WlSessionLock`) + qylock 의 SDDM 흉내 shim | `~/.local/share/quickshell-lockscreen/lock.sh` |
+| 원본 | qylock clone | `~/.local/share/qylock` (잠금 화면의 `themes_link` 가 여기를 가리킨다) |
+
+필요한 패키지 (`packages.txt` 의 "잠금 · 로그인 화면"):
+- `qt6-multimedia` + `qt6-multimedia-ffmpeg` — 배경 영상 `bg.mp4`. Qt 는 FFmpeg 엔진을 쓴다 (gstreamer 엔진 불필요)
+- `qt6-5compat` — 테마가 `import Qt5Compat.GraphicalEffects` (블러 · 그림자)
+- **Qt5 패키지는 필요 없다** — README 의 "Qt5 Legacy Mode"(`qt5.sh`, `qt5-graphicaleffects`)는 Qt5 SDDM 을 쓰는 배포판용. Arch 의 SDDM 은 Qt6
+
+qylock 의 `sddm.sh` · `quickshell.sh` 는 테마를 고르는 대화형 스크립트라 `setup.sh` 는 부르지 않고 같은 일을 직접 한다:
+테마 폴더 복사 + `theme.conf`, 잠금 화면 폴더 복사 + `themes_link` + `lock.sh` 에 테마 고정. 그리고 **패치**를 적용한다.
+
+**패치 — [linux/qylock/lockscreen-pam-hang.patch](linux/qylock/lockscreen-pam-hang.patch)**: 원본은 빈 칸에서 Enter 를 누르면
+PAM 이 "Password:" 를 물은 채 멈추고, 이후 어떤 비밀번호도 받지 않는다(재부팅해야 했다). 덮개를 열고 화면을 깨우려 Enter 를
+누르는 습관에서 생긴다. 빈 Enter 를 무시하고, 대기 중인 PAM 이 있으면 그 세션에 답하게 고쳤다. 원리는 REFACTOR Phase 9.
+qylock 을 다시 설치(`quickshell.sh`)하면 패치가 사라지므로 `setup.sh qylock` 을 다시 돌릴 것.
+
+### 10-3. DMS 와 잠금 연동
+
+DMS 는 자체 잠금 화면 대신 외부 명령을 쓰게 할 수 있다. 둘 다 `settings.json` 에 있어 `restore` 로 함께 돌아온다.
+
+| DMS 설정 (Settings → Power) | 값 | 효과 |
+| --- | --- | --- |
+| Custom Power Actions → Lock | `~/.local/share/quickshell-lockscreen/lock.sh` | DMS 가 잠글 일이 생기면 qylock 을 띄운다 |
+| Lock before suspend | 켬 | **덮개만 닫아도** 잠긴다 (logind 의 sleep delay inhibitor 로 확인: `systemd-inhibit --list`) |
+
+- 단축키 Ctrl+Cmd+Q(`Mod+Ctrl+Q`)는 `dms ipc call lock lock` — `lock.sh` 를 직접 부르면 DMS 가 모르고 자기 잠금을 또 시도해
+  niri 가 "refusing lock as already locked" 로 거절하던 경합이 생긴다. DMS 를 거치면 한 번만 뜬다
+- 덮개를 닫으면 영상 로딩(약 2초) 때문에 잠금 화면이 조금 늦게 뜬다 — 정상
+
+### 10-4. 잠금 화면에서 맞는 비밀번호가 거부될 때
+
+CachyOS 기본 `pam_faillock` 은 **3번 틀리면 10분간** 계정을 잠근다. 그동안은 맞는 비밀번호도 `access denied` 이고 sudo 도 막힌다.
+
+```bash
+faillock --user $USER     # 실패 기록 확인 (Valid V 가 3개면 잠긴 상태)
+```
+
+10분 기다리면 풀린다. 횟수 · 시간은 `/etc/security/faillock.conf` 의 `deny` · `unlock_time` (기본값 유지 중).
+틀린 적이 없는데 안 풀리면 위의 PAM 멈춤 — 패치가 적용됐는지 `grep -c 'dotfiles patch' ~/.local/share/quickshell-lockscreen/shim/SddmShim.qml`.
+

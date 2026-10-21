@@ -200,5 +200,7 @@
       "trigger": "qrg"
     }
   },
-  "configVersion": 18
+  "configVersion": 18,
+  "customPowerActionLock": "~/.local/share/quickshell-lockscreen/lock.sh",
+  "lockBeforeSuspend": true
 }

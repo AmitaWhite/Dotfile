@@ -47,7 +47,7 @@ if status is-interactive
     abbr lg lazygit
     abbr nv nvim
     abbr cat bat
-    abbr th thunar
+    abbr th nautilus
     abbr zd zeditor
 
     # CLI - Youtube Music Player

@@ -1,0 +1,22 @@
+--- a/shim/SddmShim.qml
++++ b/shim/SddmShim.qml
+@@ -163,7 +163,19 @@
+         signal loginFailed()
+         signal loginSucceeded()
+ 
++        // [dotfiles patch] 원본은 빈 비밀번호로도 pam.start() 를 불러, PAM 이 "Password:" 를 물은 채
++        // 아무도 답하지 않는 상태로 멈췄다. 이후 start() 는 이미 active 라 아무 일도 안 해 영구히 못 푼다.
++        // (덮개 열고 화면 깨우려 Enter 를 누르는 습관에서 재현)
+         function login(user, password, sessionIndex) {
++            if (!password)
++                return;                        // 빈 Enter 는 무시
++            if (pam.active) {
++                if (pam.responseRequired) {
++                    pam.pendingPassword = "";
++                    pam.respond(password);     // 이미 비밀번호를 기다리는 세션이면 바로 답한다
++                }
++                return;                        // 이전 시도를 확인 중이면 결과(성공/실패)를 기다린다
++            }
+             pam.user = user;
+             pam.pendingPassword = password;
+             pam.start();
