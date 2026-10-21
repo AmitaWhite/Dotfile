@@ -2,6 +2,7 @@
 
 macOS · Arch/CachyOS · WSL 을 오가며 쓰는 설정 번들. 저장소는 `~/.dotfiles` 에 두고, 앱별 디렉토리를
 `link.sh` 가 실제 경로(`~/.config/...`)에 심링크로 건다. 어느 파일이 어디에 걸리는지는 `links.txt` 가 전부다.
+(`link.sh` 는 자기 위치를 기준으로 링크하므로 저장소 위치는 자유다 — 문서의 `~/.dotfiles` 는 관례일 뿐. 예: CachyOS 는 `~/Dotfile`)
 
 ## 원칙 — 오버라이드만 담는다
 

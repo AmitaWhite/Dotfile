@@ -18,6 +18,8 @@
 
 저장소는 `~/.dotfiles` 에 두고, 실제 경로엔 **심링크만** 있다. 어디에 무엇이 걸리는지는 [links.txt](links.txt) 한 파일이 전부다
 (`<플랫폼> <저장소 경로> <실제 경로> [모드]`, 플랫폼은 `all` / `mac` / `linux`, WSL 은 linux).
+`link.sh` 는 자기 위치(`$0` 의 디렉토리)를 저장소로 보므로 다른 곳에 clone 해도 된다. 아래 `~/.dotfiles` 는 그 자리로 읽으면 된다.
+옮긴 뒤엔 `link.sh` 를 다시 돌리면 옛 위치를 가리키던 링크가 `relink` 된다.
 
 ```bash
 ~/.dotfiles/link.sh --dry-run     # 무엇을 할지만 본다

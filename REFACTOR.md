@@ -127,7 +127,7 @@ nvim 0.12.4 가 `libtree-sitter.0.26.dylib` 에 동적 링크돼 있어 nvim 이
         참조만 하면 되고 `link` 로 유지 (`95457a8`)
   - [x] DMS 가 관리하는 파일 전수 확인 → 아래 "Phase 8-2"
   - [x] 나머지 `linux` 항목 경로 — `link.sh --dry-run` 전부 `ok`
-  - [ ] `~/.config/niri/config.kdl.pre-link-*` 등 남은 백업 정리 (noctalia 시절 내용 — 필요 없으면 삭제)
+  - [x] 남은 `*.pre-link-*` 백업(niri · fish · btop)과 ghostty `config.ghostty` 를 휴지통으로 (2026-10-21)
 
 ### Phase 8-2 — DMS 설정 스냅샷 · 복원 (`--restore`)
 
@@ -158,6 +158,8 @@ DMS 가 쓰는 파일 분류 (실측):
 `config.kdl` 에 해당 include 가 있는지 grep 하고, 없으면 그 탭에 "설정" 버튼을 띄워 누르면 include 줄을 덧붙인다
 (바이너리 내장 QML `checkIncludeStatus` / `fixInclude`). 즉 그 기능(창 규칙 · 배경 blur)을 처음 쓸 때 DMS 가
 `config.kdl` 을 고치고, 그 변경은 다음 `--pull` 에 잡힌다.
+단, `windowrules` 는 실제로 **한 번 켜 둔 적이 있었다** — Phase 8 때 남은 `config.kdl.pre-link-*` 백업이 지금
+`config.kdl` 과 정확히 `include "dms/windowrules.kdl"` 한 줄만 달랐다. link/백업 과정에서 잃은 것이라 되살리고 pull 했다.
 
 ---
 
