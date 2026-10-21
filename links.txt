@@ -38,5 +38,6 @@ linux  linux/niri/dms/layout.kdl                ~/.config/niri/dms/layout.kdl   
 linux  linux/niri/dms/input.kdl                 ~/.config/niri/dms/input.kdl              pull
 linux  linux/dms/settings.json                  ~/.config/DankMaterialShell/settings.json pull
 linux  linux/dms/plugin_settings.json           ~/.config/DankMaterialShell/plugin_settings.json pull
+linux  linux/kime/config.yaml                 ~/.config/kime/config.yaml
 linux  linux/thunar/uca.xml                     ~/.config/Thunar/uca.xml
 linux  linux/thunar/thunar-volman.xml           ~/.config/Thunar/thunar-volman.xml

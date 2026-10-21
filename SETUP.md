@@ -76,7 +76,7 @@ dms restart                               # 실행 중인 DMS 가 메모리의 �
 주의:
 - `~/.config/nvim` 자체가 `~/Dotfile/nvim` 링크다. lazy.nvim 은 `stdpath("config")` 를 통해 링크 너머의 `lazy-lock.json` 에 쓴다 (확인됨)
 - fish 는 `config.fish` · `fish_plugins` · `functions/fish_greeting.fish` 만 링크. `conf.d/`·`fish_variables` 는 fisher/fish 가 만드는 머신 상태라 저장소에 없다. 새 머신에선 fisher 설치 후 `fisher update` 로 `fish_plugins` 목록이 복원된다
-- `linux/` 의 hypr · niri · foot · btop · thunar 는 Wayland 세션에서만 의미 있다. thunar 는 실제 경로가 `~/.config/Thunar`(대문자)
+- `linux/` 의 niri · dms · foot · btop · kime · thunar 는 Wayland 세션에서만 의미 있다 (hypr 는 링크하지 않고 보관만). thunar 는 실제 경로가 `~/.config/Thunar`(대문자)
 
 ## 2. 필수 — 없으면 `:checkhealth` 가 빨갛다
 
@@ -178,5 +178,12 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
 
 - **macOS (Intel)**: Homebrew 가 x86_64 지원을 종료해 bottle 이 없는 포뮬러는 소스 빌드로 빠진다. nvim 런타임 의존성(tree-sitter, libuv)은 단독 업그레이드 금지 — `brew upgrade` 로 함께.
 - **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrainsmono-nerd`, `wl-clipboard`.
+- **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 DMS 설정의 시작 앱에 `kime` 등록.
+  설정은 `linux/kime/config.yaml` 링크 — **한영 = 우측 Command(`SuperR`)**, 우측 Option 은 일반 Alt 로 돌려줌.
+  - `global_hotkeys` 는 맵 통째 교체라 기본 항목(Hangul · Super-Space · Esc …)도 함께 적혀 있다. 키 이름은 kime 엔진 기준(`SuperR` `AltR` `ControlR` …)
+  - 우측 Command 는 niri 의 Mod 이기도 하다. 단독으로 눌렀다 떼면 한영, 누른 채 다른 키면 niri 단축키
+  - 키가 안 먹으면 `wev -f wl_keyboard:key` 로 키 이름 확인 (MacBook 은 `hid_apple swap_opt_cmd=0` 에서 `Super_R`)
+  - `kime-check` 의 `GTK_IM_MODULE` / `QT_IM_MODULE` Fail 은 Wayland 네이티브 앱에선 무시해도 된다.
+    Chrome · Electron · 일부 Qt 앱에서 한글이 안 써지면 그때 환경변수 / 앱 플래그를 손본다
 - **WSL(Arch)**: 클립보드 `win32yank`, 이미지 렌더는 Windows Terminal 이 kitty protocol 을 지원하지 않아 ✘. `:checkhealth snacks` 로 확인.
 - 다크/라이트: nvim 이 **터미널 배경색**을 감지한다. 터미널 테마가 OS 를 따라가게 설정해야 nvim 도 따라간다 (ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`).

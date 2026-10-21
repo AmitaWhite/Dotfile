@@ -28,7 +28,7 @@ helix/       config.toml · languages.toml · themes/
 fish/        mac/ · linux/     (config.fish · fish_plugins · functions/)
 starship/    starship.toml
 fastfetch/   config.jsonc                                (linux)
-linux/       hypr · niri · foot · btop · thunar          (Wayland DE, linux 전용)
+linux/       niri · dms · foot · btop · kime · thunar    (Wayland DE, linux 전용. hypr 는 보관만)
 archive/     안 쓰지만 버리지 않은 것 (wezterm · paneru · 옛 nvim tsserver 설정)
 docs/        기능 가이드
 link.sh · links.txt   심링크 스크립트 · 매니페스트

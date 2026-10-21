@@ -1,0 +1,43 @@
+# kime 사용자 설정 — 기본값(/usr/share/doc/kime/default_config.yaml)에서 바꾼 것만.
+# global_hotkeys 는 맵 통째로 교체되므로 기본 항목을 함께 적는다.
+#
+# 한영 전환: 우측 Alt → 우측 Command(SuperR)
+#   MacBook Air(hid_apple swap_opt_cmd=0)에서 우측 Command 는 KEY_RIGHTMETA = SuperR.
+#   우측 Option(AltR)은 한영에서 빼서 일반 Alt 로 돌려준다.
+#   누르는 순간 Super 수식키가 함께 잡힐 수 있어 Super-SuperR 도 등록 (기본값의 M-AltR 과 같은 이유)
+engine:
+  global_hotkeys:
+    SuperR:
+      behavior: !Toggle
+      - Hangul
+      - Latin
+      result: Consume
+    Super-SuperR:
+      behavior: !Toggle
+      - Hangul
+      - Latin
+      result: Consume
+    Hangul:
+      behavior: !Toggle
+      - Hangul
+      - Latin
+      result: Consume
+    Muhenkan:
+      behavior: !Toggle
+      - Hangul
+      - Latin
+      result: Consume
+    Super-Space:
+      behavior: !Toggle
+      - Hangul
+      - Latin
+      result: Consume
+    Esc:
+      behavior: !Switch Latin
+      result: Bypass
+    M-C-Backslash:
+      behavior: !Mode Math
+      result: ConsumeIfProcessed
+    M-C-E:
+      behavior: !Mode Emoji
+      result: ConsumeIfProcessed

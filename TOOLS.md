@@ -69,6 +69,12 @@
 | **mole** | 디스크 분석·정리 (CleanMyMac 류) | 용량 부족할 때 | `b:mole` |
 | **duf** | `df` 대체 — 디스크 사용량 표 | | `b:duf` `p:duf` |
 
+## 시스템 (linux)
+
+| 도구 | 무엇 | 언제 | 설치 | 관계 |
+| --- | --- | --- | --- | --- |
+| **kime** | 한글 입력기 (Wayland input-method · XIM) | 항상 | AUR `kime` | DMS 시작 앱으로 실행. 한영 = 우측 Command — [SETUP §9](SETUP.md#9-환경별-주의) |
+
 ## 연습
 
 | 도구 | 무엇 | 설치 |
