@@ -45,24 +45,14 @@
         "all"
       ],
       "showOnLastDisplay": true,
-      "leftWidgets": [
-        "launcherButton",
-        "workspaceSwitcher",
-        "focusedWindow"
-      ],
+      "leftWidgets": [],
       "centerWidgets": [
         "music",
         "clock",
         "weather"
       ],
       "rightWidgets": [
-        "systemTray",
-        "clipboard",
-        "cpuUsage",
-        "memUsage",
-        "notificationButton",
-        "battery",
-        "controlCenterButton"
+        "systemTray"
       ],
       "spacing": 4,
       "innerPadding": -1,
@@ -120,7 +110,7 @@
       "islandHomeCompactTight": true,
       "islandBatteryStyle": "solid",
       "islandSatelliteBackground": false,
-      "islandSatellitesEnabled": false,
+      "islandSatellitesEnabled": true,
       "islandSatellitePosition": "edges",
       "islandReserveThickness": 24,
       "islandHomeLayout": [
