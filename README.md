@@ -114,17 +114,19 @@ lua/plugins/*.lua         플러그인별 오버라이드 (파일 1개 = 플러�
 | ------ | -------------- | ---------------------------------------------------------------- |
 | Python | pyright + ruff | **진단은 ruff 만**, pyright 는 완성·정의 이동·hover 담당 (타입 에러는 안 보임) |
 | SQL    | postgres_lsp   | sql extra 가 LSP 를 안 넣어서 직접 추가                          |
+| JS/TS  | vtsls + eslint | eslint 가 붙은 버퍼에선 vtsls 의 "안 쓰는 변수 · import" 진단을 버림 (같은 내용이 두 번 뜨던 것) |
 
-TS(vtsls) · Java(jdtls, lombok 포함) 는 extras 기본값 그대로.
+TS(vtsls)는 위 진단 필터 외엔, Java(jdtls, lombok 포함)는 extras 기본값 그대로.
 mason 자동설치: `stylua`, `shellcheck`, `shfmt`, `lemminx`. **rust-analyzer 는 rustup 컴포넌트**로.
 
 ### 알아둘 점
 
 - **Picker 는 `snacks.picker`**, 입력창은 `snacks.input` (telescope · dressing 제거함)
 - **창 테두리는 `vim.opt.winborder`** 한 곳에서 제어 (`options.lua`). noice / lazy 는 미지원이라 각자 설정
-- **다크/라이트**: nvim 이 터미널 배경색을 자동 감지해 `background` 를 세팅하고, tokyonight 가
-  dark=`moon` / light=`day` 를 고른다. 셸 호출 없음. **터미널도 OS 를 따라가야** 실제로 전환됨
-  → ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`
+- **다크/라이트**: nvim 이 시작할 때 터미널 배경색을 감지(OSC 11)하고, 그에 맞춰 `tokyonight-day` / `tokyonight-night` 를
+  직접 고른다 (`colorscheme.lua` — tokyonight 이 로드 시 background 를 dark 로 덮어쓰는 문제 회피). 셸 호출 없음.
+  **터미널도 OS 를 따라가야** 실제로 전환됨 → linux: DMS 가 foot · ghostty 색을 생성 / mac ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`.
+  실행 중 OS 테마를 바꾸면 nvim 을 다시 열거나 `:set background=light|dark`
 - colorscheme 는 tokyonight, `transparent = true`
 
 ---

@@ -180,6 +180,7 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
 ## 9. 환경별 주의
 
 - **macOS (Intel)**: Homebrew 가 x86_64 지원을 종료해 bottle 이 없는 포뮬러는 소스 빌드로 빠진다. nvim 런타임 의존성(tree-sitter, libuv)은 단독 업그레이드 금지 — `brew upgrade` 로 함께.
+- **foot 은 리가처를 지원하지 않는다** (설계상). JetBrains Mono 의 `=>` `!=` 등 리가처는 ghostty 에서만 보인다 — nvim 리가처가 필요하면 ghostty 로.
 - **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrains-mono-nerd`, `wl-clipboard`. 고른 패키지 전체는 [linux/packages.txt](linux/packages.txt) (§10).
 - **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 kime 패키지가 `/etc/xdg/autostart/kime.desktop` 로 등록한다
   (지금 기기엔 DMS 시작 앱으로 만든 `~/.config/autostart/kime.desktop` 가 이를 덮지만 결과는 같다 — 따로 할 일 없음).
