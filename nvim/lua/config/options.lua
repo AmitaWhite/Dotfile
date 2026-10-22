@@ -27,6 +27,11 @@ vim.opt.cursorline = false
 -- 맞춤법 검사(LazyVim 이 markdown · text · gitcommit 에서 켠다)가 한글을 전부 오타로 그었다.
 -- cjk 는 동아시아 문자(한글 포함)를 검사에서 빼는 특수 값 — 영어 오타 검사만 남는다 (:h spell-cjk)
 vim.opt.spelllang = { "en", "cjk" }
+
+-- modeline 끔: 파일 처음 · 끝 5줄의 "vim: / vi: / ex:" 를 설정으로 읽는 기능. 메모의 "- ex: `spread` …" 같은
+-- 예시 줄을 설정으로 읽어 E518(Unknown option) 이 났다. 거의 안 쓰는 기능이고 남의 파일 설정이
+-- 자동 적용되는 것이라 꺼 두는 편이 안전하다
+vim.opt.modeline = false
 vim.opt.list = false
 
 -- mason 이 설치한 도구(tree-sitter-cli 등)를 mason 이 로드되기 전에도 찾을 수 있게 PATH 앞에 둔다.
