@@ -82,6 +82,12 @@ return {
           end
         end
 
+        -- nvim 기본 팝업 메뉴(스니펫 선택지 · 명령줄 완성)를 blink 메뉴와 같은 모양으로: 투명 배경 + 같은 테두리색.
+        -- 테두리 자체는 options.lua 의 pumborder. tokyonight 은 Pmenu 를 불투명하게 칠한다 (night #16161e · day 연파랑)
+        hl.Pmenu = { fg = c.fg, bg = "none" }
+        hl.PmenuSbar = { bg = "none" }
+        hl.PmenuBorder = hl.FloatBorder
+
         -- helix: "variable.parameter" = { fg = yellow, modifiers = ["italic"] }
         hl["@variable.parameter"] = { fg = c.yellow, italic = true }
 

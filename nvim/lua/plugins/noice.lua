@@ -3,6 +3,10 @@ return {
   "folke/noice.nvim",
   event = "VeryLazy",
   opts = {
+    -- noice 는 nvim 기본 팝업 메뉴(pum)를 가로채 테두리 있는 창으로 다시 그리는데, 테두리 윗줄을
+    -- 커서가 있는 줄에 놓아 입력 중인 글자를 덮었다. 일반 자동완성은 blink 가 그리므로 noice 쪽이
+    -- 쓰이는 곳은 스니펫 선택지(CSS border 의 ${2|solid,dashed,…|} 등) 정도 — 기본 pum 으로 돌린다.
+    popupmenu = { enabled = false },
     views = {
       hover = {
         border = {
