@@ -1,0 +1,37 @@
+/* ghostty(linux, GTK4 · libadwaita) 탭 바를 얇게. config.arch 의 gtk-custom-css 가 읽는다.
+   노드 구조(libadwaita): toolbarview > .top-bar > ... > tabbar > .box > ... > tab
+   실시간으로 고쳐 보려면: GTK_DEBUG=interactive ghostty  (GTK Inspector) */
+
+/* 탭 바와 그것을 감싼 상단 막대: 배경 · 그림자를 없애 터미널(반투명)과 이어지게 */
+toolbarview > .top-bar,
+.top-bar,
+tabbar,
+tabbar .box {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* 탭 바 높이 · 여백 */
+tabbar .box {
+  min-height: 0;
+  padding: 2px 6px;
+}
+
+/* 탭 하나: 높이 · 좌우 여백 · 글자 */
+tabbar tab {
+  min-height: 22px;
+  padding: 0 8px;
+  font-size: 10pt;
+}
+
+/* 고른 탭만 살짝 배경을 깔아 구분 */
+tabbar tab:selected {
+  background: alpha(currentColor, 0.12);
+}
+
+/* 탭의 닫기(×) 버튼도 작게 */
+tabbar tab button.image-button {
+  min-height: 16px;
+  min-width: 16px;
+  padding: 0;
+}

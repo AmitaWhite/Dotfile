@@ -14,6 +14,11 @@ window-padding-x = 12
 window-padding-y = 12
 background-opacity = 0.78
 
+# 탭 바: 얇고 좁게 — 탭은 제목 길이만큼(wide 끔), 그림자 없이, 높이 · 여백은 tabs.css (→ ~/.config/ghostty/tabs.css)
+gtk-wide-tabs = false
+gtk-toolbar-style = flat
+gtk-custom-css = ~/.config/ghostty/tabs.css
+
 # niri 의 Mod+T(새 터미널)가 ghostty 를 띄운다. 이미 떠 있는 ghostty 가 창만 새로 열게 해 빠르고 메모리를 아낀다
 # (기본값 desktop 은 .desktop 으로 띄울 때만 단일 인스턴스 — niri spawn 은 해당 안 됨)
 gtk-single-instance = true
