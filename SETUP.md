@@ -6,7 +6,7 @@
 ## 0. 한눈에
 
 ```txt
-1. git clone git@github.com:AmitaWhite/Dotfile.git ~/Dotfile
+1. git clone https://github.com/AmitaWhite/Dotfile.git ~/Dotfile
 2. ~/Dotfile/link.sh --dry-run  →  ~/Dotfile/link.sh     (§1)
 3. 필수 도구 설치 (§2)  ← 이것만 있으면 nvim 은 뜬다
 4. 언어 툴체인 (§3)      ← 쓰는 언어만
@@ -24,7 +24,7 @@
 숨김 폴더로 받아지지 않게 clone 대상을 `~/Dotfile` 로 준다. `link.sh` 는 자기 위치(`$0` 의 디렉토리)를 저장소로 보므로
 위치를 옮겨도 동작하고, 옮긴 뒤 `link.sh` 를 다시 돌리면 옛 위치를 가리키던 링크가 `relink` 된다.
 (예전 위치 `~/.dotfiles` 에서 옮길 때: `mv ~/.dotfiles ~/Dotfile && ~/Dotfile/link.sh`.
- GitHub 저장소 이름도 `.dotfile` → `Dotfile` 로 바뀌었다 — 옛 주소는 리다이렉트되지만 `git remote set-url origin …/Dotfile.git` 권장)
+ GitHub 저장소 이름도 `.dotfile` → `Dotfile` 로 바뀌었다 — 옛 주소는 리다이렉트되지만 `git remote set-url origin https://github.com/AmitaWhite/Dotfile.git` 권장 — 인증은 HTTPS)
 
 ```bash
 ~/Dotfile/link.sh --dry-run     # 무엇을 할지만 본다
@@ -226,7 +226,7 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
     설치 프로그램이 하드웨어를 감지해 broadcom-wl-dkms 를 자동으로 넣는다 — packages.txt 엔 적지 않음)
 2. curl -fsSL https://install.danklinux.com | sh         DMS 설치 프로그램 (niri · quickshell · ghostty · matugen …)
 3. 재부팅 → niri 세션에 로그인해 DMS 를 한 번 띄운다      ~/.config/niri/dms/* · settings.json 생성
-4. git clone git@github.com:AmitaWhite/Dotfile.git ~/Dotfile
+4. git clone https://github.com/AmitaWhite/Dotfile.git ~/Dotfile
 5. ~/Dotfile/linux/setup.sh --dry-run  →  ~/Dotfile/linux/setup.sh
 6. 재부팅 (SDDM 로그인 화면 확인)
 ```
