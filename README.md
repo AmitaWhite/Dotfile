@@ -115,6 +115,7 @@ lua/plugins/*.lua         플러그인별 오버라이드 (파일 1개 = 플러�
 | Python | pyright + ruff | **진단은 ruff 만**, pyright 는 완성·정의 이동·hover 담당 (타입 에러는 안 보임) |
 | SQL    | postgres_lsp   | sql extra 가 LSP 를 안 넣어서 직접 추가                          |
 | JS/TS  | vtsls + eslint | eslint 가 붙은 버퍼에선 vtsls 의 "안 쓰는 변수 · import" 진단을 버림 (같은 내용이 두 번 뜨던 것) |
+| HTML · JSP | html + emmet_language_server | JSP 에 HTML 태그 완성 · Emmet 펼치기. emmet 은 html · jsp 에만 (React · CSS 엔 안 켬) |
 
 TS(vtsls)는 위 진단 필터 외엔, Java(jdtls, lombok 포함)는 extras 기본값 그대로.
 mason 자동설치: `stylua`, `shellcheck`, `shfmt`, `lemminx`. **rust-analyzer 는 rustup 컴포넌트**로.

@@ -16,6 +16,19 @@ return {
         },
       },
       postgres_lsp = {},
+      -- JSP 에 HTML 태그 · 속성 완성과 Emmet(div.box>ul>li*3 → 펼치기)을 붙인다.
+      -- JSP 는 LSP 가 없고 treesitter 도 없어(하이라이트는 Vim 내장 syntax/jsp.vim) HTML 쪽을 빌려 쓴다.
+      -- 일부러 html · jsp 에만: lspconfig 기본값은 React(jsx/tsx) · CSS 에도 emmet 을 켜는데,
+      -- 거기선 vtsls · 스니펫과 제안이 겹쳐 시끄러워서 지금 동작을 바꾸지 않는다.
+      html = {
+        filetypes = { "html", "jsp" },
+      },
+      emmet_language_server = {
+        filetypes = { "html", "jsp" },
+        init_options = {
+          includeLanguages = { jsp = "html" }, -- emmet 이 jsp 를 html 문법으로 펼치게
+        },
+      },
       -- JS/TS 에서 eslint 와 vtsls 가 "안 쓰는 변수 · import" 를 각각 보고해 한 줄에 두 번씩 뜬다
       -- (vtsls HINT 'declared but its value is never read' + eslint WARN no-unused-vars, 실측).
       -- eslint 가 붙은 버퍼에서만 vtsls 쪽 해당 코드를 버린다. eslint 없는 프로젝트에선 vtsls 것이 그대로 남는다.
