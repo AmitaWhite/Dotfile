@@ -124,6 +124,13 @@ step_restore() {
   else
     note "이미 스냅샷과 같다"
   fi
+
+  # 플러그인: lock 파일은 위에서 돌아오지만 플러그인 자체는 설치해야 한다 (이미 있으면 그대로 둔다)
+  local lock="$HOME/.config/DankMaterialShell/plugins.lock.json"
+  if [ -f "$lock" ] && command -v dms >/dev/null; then
+    printf '   $ dms plugins restore %s\n' "$lock"
+    [ "$dry" = 1 ] || dms plugins restore "$lock" 2>/dev/null | tail -1
+  fi
 }
 
 # ---- 5. qylock — SDDM 로그인 화면 + quickshell 잠금 화면 ----

@@ -65,7 +65,9 @@ DMS 는 첫 실행 때 `~/.config/niri/dms/*` · `settings.json` 을 기본값�
 dms restart                               # 실행 중인 DMS 가 메모리의 기본값으로 덮어쓰지 않게 바로 재시작
 ```
 
-복원 대상 (`links.txt` 의 `pull`): niri `config.kdl`, `dms/binds.kdl` · `layout.kdl` · `input.kdl`, DMS `settings.json` · `plugin_settings.json`.
+복원 대상 (`links.txt` 의 `pull`): niri `config.kdl`, `dms/binds.kdl` · `layout.kdl` · `input.kdl`, DMS `settings.json` · `plugin_settings.json` · `plugins.lock.json`.
+DMS **플러그인**(지금은 Wallpaper Carousel)은 lock 파일만으론 안 깔린다 — `dms plugins restore ~/.config/DankMaterialShell/plugins.lock.json`
+(setup.sh `restore` 단계가 한다. 플러그인을 새로 깔거나 지운 뒤엔 `dms plugins lock` → `--pull` 로 lock 을 갱신해 커밋)
 색(`colors.kdl`, `dank-colors.ini`, ghostty `dankcolors` …)은 배경화면에서 다시 생성되므로 담지 않는다.
 `outputs.kdl` 은 모니터마다 달라 담지 않는다 — DMS 디스플레이 설정에서 새로 잡는다.
 
@@ -215,7 +217,7 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
 | `packages` | [linux/packages.txt](linux/packages.txt) 에서 빠진 것만 `pacman -S --needed` → `paru -S --needed`. `dms` 항목은 확인만 |
 | `link` | `link.sh` — nvim · foot · fish · kime … 심링크 |
 | `shell` | fisher + `fish_plugins` 의 플러그인, sdkman + JDK (`JAVA_ID=… setup.sh shell` 로 버전 변경) — §11 |
-| `restore` | `link.sh --restore` — DMS · niri 설정 스냅샷(§1-1). 덮기 전에 묻는다 |
+| `restore` | `link.sh --restore` — DMS · niri 설정 스냅샷(§1-1). 덮기 전에 묻는다. 이어서 `dms plugins restore` 로 DMS 플러그인 설치 |
 | `qylock` | 로그인 · 잠금 화면 (아래). sudo 가 필요하다 |
 
 ### 10-1. 패키지 목록 — `linux/packages.txt`

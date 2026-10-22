@@ -39,4 +39,6 @@ linux  linux/niri/dms/layout.kdl                ~/.config/niri/dms/layout.kdl   
 linux  linux/niri/dms/input.kdl                 ~/.config/niri/dms/input.kdl              pull
 linux  linux/dms/settings.json                  ~/.config/DankMaterialShell/settings.json pull
 linux  linux/dms/plugin_settings.json           ~/.config/DankMaterialShell/plugin_settings.json pull
+# DMS 플러그인 목록 + 고정 커밋. 파일만으론 플러그인이 안 깔린다 — setup.sh restore 가 `dms plugins restore` 로 설치
+linux  linux/dms/plugins.lock.json              ~/.config/DankMaterialShell/plugins.lock.json pull
 linux  linux/kime/config.yaml                 ~/.config/kime/config.yaml
