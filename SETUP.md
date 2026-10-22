@@ -202,6 +202,8 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
   `Ctrl+T` · `Ctrl+W` 로 탭을 열고 닫지 않는 이유: ghostty 가 가로채면 nvim 의 창 명령(`Ctrl+W h/j/k/l` …) ·
   셸의 단어 지우기 · fzf 의 파일 찾기(`Ctrl+T`)가 막힌다. 맥은 Cmd 가 터미널 프로그램으로 안 가서 괜찮은 것.
   niri 쪽: 새 터미널 `Mod+T` = ghostty(`gtk-single-instance` 로 창만 새로), 브라우저 `Mod+B`(`Mod+W` 를 비우려고 옮김)
+  ghostty 는 첫 실행이 느려(GTK4 + GPU 렌더러 준비) 로그인 때 창 없이 미리 띄우고(`config.kdl` 의 `spawn-at-startup`),
+  마지막 창을 닫아도 끄지 않는다(`quit-after-last-window-closed = false`). 대기 중 약 30MB
 - **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrains-mono-nerd`, `wl-clipboard`. 고른 패키지 전체는 [linux/packages.txt](linux/packages.txt) (§10).
 - **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 kime 패키지가 `/etc/xdg/autostart/kime.desktop` 로 등록한다
   (지금 기기엔 DMS 시작 앱으로 만든 `~/.config/autostart/kime.desktop` 가 이를 덮지만 결과는 같다 — 따로 할 일 없음).

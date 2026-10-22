@@ -137,6 +137,9 @@ overview {
 environment {
   XDG_CURRENT_DESKTOP "niri"
 }
+// ghostty 를 창 없이 미리 띄워 둔다 → Mod+T(ghostty)가 첫 번째부터 바로 뜬다.
+// ghostty 설정(gtk-single-instance · quit-after-last-window-closed = false)과 짝 — Dotfile/ghostty/config.arch
+spawn-at-startup "ghostty" "--initial-window=false"
 hotkey-overlay {
     skip-at-startup
 }
