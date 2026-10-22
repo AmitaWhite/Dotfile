@@ -23,6 +23,10 @@ vim.opt.pumborder = vim.o.winborder
 --   list       : 탭 화살표 · 헛공백 점 표시
 -- 되돌리려면 true 로. 일시 토글은 :set cursorline! / :set list!
 vim.opt.cursorline = false
+
+-- 맞춤법 검사(LazyVim 이 markdown · text · gitcommit 에서 켠다)가 한글을 전부 오타로 그었다.
+-- cjk 는 동아시아 문자(한글 포함)를 검사에서 빼는 특수 값 — 영어 오타 검사만 남는다 (:h spell-cjk)
+vim.opt.spelllang = { "en", "cjk" }
 vim.opt.list = false
 
 -- mason 이 설치한 도구(tree-sitter-cli 등)를 mason 이 로드되기 전에도 찾을 수 있게 PATH 앞에 둔다.

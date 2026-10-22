@@ -129,6 +129,7 @@ mason 자동설치: `stylua`, `shellcheck`, `shfmt`, `lemminx`. **rust-analyzer 
   **터미널도 OS 를 따라가야** 실제로 전환됨 → linux: DMS 가 foot · ghostty 색을 생성 / mac ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`.
   실행 중 OS 테마를 바꾸면 nvim 을 다시 열거나 `:set background=light|dark`
 - colorscheme 는 tokyonight, `transparent = true`
+- **Markdown**: 맞춤법 검사는 영어만(`spelllang = en,cjk` — 한글 제외). markdownlint 는 시끄러운 스타일 규칙(줄 길이 · 빈 줄 · HTML · 굵게-제목 · 첫 줄 제목)을 끈 `nvim/.markdownlint-cli2.yaml` 을 린터 · 포맷터 양쪽에 준다
 
 ---
 

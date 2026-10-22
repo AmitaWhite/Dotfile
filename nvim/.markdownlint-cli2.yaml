@@ -1,0 +1,10 @@
+# markdownlint-cli2 기본 설정 — nvim 이 린터 · 포맷터(저장 시 --fix) 양쪽에 --config 로 넘긴다 (lua/plugins/markdownlint.lua)
+# 프로젝트에 자기 .markdownlint* 가 있으면 그쪽이 이 위에 덧씌워진다.
+# 메모 · 문서를 쓸 때 시끄럽기만 한 스타일 규칙만 끈다. 링크 · 코드블록 · 제목 구조 같은 실수 검사는 그대로.
+config:
+  MD013: false # 줄 길이 80 — 한글 문단은 금방 넘는다
+  MD022: false # 제목 앞뒤 빈 줄
+  MD032: false # 목록 앞뒤 빈 줄
+  MD033: false # 인라인 HTML (<br>, <details> 등)
+  MD036: false # **굵게** 를 제목처럼 쓰지 말 것
+  MD041: false # 첫 줄은 # 제목이어야 함
