@@ -50,6 +50,7 @@ pacman  yazi                        # 터미널 파일 관리자
 pacman  zellij                      # 터미널 멀티플렉서 (DMS muxType)
 pacman  lazygit
 pacman  github-cli                  # gh
+pacman  gdu                         # 폴더별 디스크 용량 TUI (맥의 Mole "분석" 역할, SETUP §12)
 
 # ---- nvim 과 그 필수 도구 (SETUP §2) ----
 # fd · fzf 는 CachyOS fish 설정의 의존성으로 이미 들어오지만, 다른 Arch 에서도 되도록 적는다

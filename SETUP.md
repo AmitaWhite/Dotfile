@@ -329,3 +329,33 @@ sdk flush tmp                     # 내려받은 zip 캐시 정리 (~/.sdkman/tm
 - **jdtls 는 JDK 21 이상**에서만 돈다. JDK 를 바꾼 뒤 nvim 을 새 fish 터미널에서 열어야 반영된다 (GUI 런처 ✘ — §3)
 - sdkman 이 설치한 것은 `~/.sdkman` 한 곳에 모인다. 통째로 지우면 깨끗이 제거된다
 
+## 12. 디스크 정리
+
+맥의 Mole 같은 "분석 + 정리" 한 방 도구는 리눅스에 없다 (AUR `mole` 은 이름만 같은 SSH 터널 도구).
+**분석은 `gdu`, 정리는 아래 명령**으로 나눠 한다. 2026-10-22 기준 `/` 111G 중 37G 사용.
+
+### 어디가 큰지 보기
+
+```bash
+gdu ~            # 홈. 화살표로 들어가고 d 로 삭제, q 종료
+sudo gdu /       # 시스템 전체 (권한 필요한 곳 포함)
+df -h /          # 전체 여유
+```
+
+GUI 가 편하면 `baobab`(GNOME 디스크 사용량 분석기)을 깔아 쓴다 — 목록엔 안 넣었다.
+
+### 자주 커지는 곳과 정리 명령
+
+| 위치 | 무엇 | 정리 | 2026-10-22 크기 |
+| --- | --- | --- | --- |
+| `/var/cache/pacman/pkg` | 받아 둔 예전 버전 패키지 | `sudo paccache -rk1` (설치본 1개만 남김, `pacman-contrib`) · 되돌릴 여유를 두려면 `-rk2` | 4.5G |
+| `~/.cache/paru` | AUR 빌드 찌꺼기 (clone · 빌드 파일) | `paru -Sc` (pacman 캐시까지 묻는다 — 질문마다 y/n) | 849M |
+| `~/.sdkman/tmp` | sdkman 이 받은 JDK zip | `sdk flush tmp` (§11) | 324M |
+| systemd 저널 | 시스템 로그 | `sudo journalctl --vacuum-size=200M` | 49M |
+| `~/.cache` 전체 | 앱 캐시 (브라우저 · nvim · mason …) | `gdu ~/.cache` 로 보고 큰 것만. 통째로 지워도 앱이 다시 만들지만 첫 실행이 느려진다 | 2.1G |
+| 안 쓰는 의존성 | 지운 프로그램이 남긴 패키지 | `pacman -Qdtq` 로 목록 확인 → `sudo pacman -Rns $(pacman -Qdtq)` (CachyOS fish 의 `cleanup` alias 가 같은 일) | — |
+
+- `bleachbit`(GUI)은 위 항목과 브라우저 캐시 등을 체크박스로 골라 지우는 도구다. 필요하면 `sudo pacman -S bleachbit`.
+  root 로 실행하는 모드는 시스템 파일까지 건드리므로 항목을 확인하고 쓸 것
+- 지우기 전에 늘 **목록부터** 본다: `paccache -dk1`(dry-run), `pacman -Qdtq`
+

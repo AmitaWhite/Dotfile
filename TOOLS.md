@@ -66,7 +66,7 @@
 | --- | --- | --- | --- |
 | **orbstack** | 컨테이너/VM (Docker 대체, colima 보다 가볍고 빠름) | docker 명령 필요할 때 | `b:--cask orbstack` |
 | **taproom** | Homebrew TUI (검색·설치 여부·정보) | 뭐 깔았는지 볼 때 | `b:gromgit/brewtils/taproom` (tap trust 필요) |
-| **mole** | 디스크 분석·정리 (CleanMyMac 류) | 용량 부족할 때 | `b:mole` |
+| **mole** | 디스크 분석·정리 (CleanMyMac 류) | 용량 부족할 때 | `b:mole` (tw93/Mole, **macOS 전용** — linux 는 gdu · §12) |
 | **duf** | `df` 대체 — 디스크 사용량 표 | | `b:duf` `p:duf` |
 
 ## 시스템 (linux)
@@ -74,6 +74,11 @@
 | 도구 | 무엇 | 언제 | 설치 | 관계 |
 | --- | --- | --- | --- | --- |
 | **kime** | 한글 입력기 (Wayland input-method · XIM) | 항상 | AUR `kime` | DMS 시작 앱으로 실행. 한영 = 우측 Command — [SETUP §9](SETUP.md#9-환경별-주의) |
+| **gdu** | 폴더별 디스크 용량 TUI, 그 자리에서 삭제 (`gdu ~`) | 용량이 어디로 갔는지 볼 때 | `p:gdu` | 맥의 mole "분석" 역할. ncdu 보다 빠르다 — [SETUP §12](SETUP.md#12-디스크-정리) |
+| *baobab* | GNOME 디스크 사용량 분석기 (원형 그래프 GUI) | 마우스로 훑어볼 때 | `p:baobab` | 안 깔았음 — gdu 로 충분. 필요할 때만 |
+| *bleachbit* | 앱 캐시 · 로그 · 임시파일 정리 GUI (CleanMyMac 의 "정리" 쪽) | 대청소 | `p:bleachbit` | 안 깔았음. 정리 대상을 하나씩 고르는 방식이라 아래 명령들로 대부분 된다 |
+
+> ⚠️ AUR 의 `mole` 은 **SSH 터널 CLI**(davrodpin/mole)로 이름만 같다. 맥의 Mole(tw93, 디스크 정리)은 macOS 전용이고 리눅스판이 없다.
 
 ## 연습
 

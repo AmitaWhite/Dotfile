@@ -37,7 +37,7 @@ linux/setup.sh · packages.txt   CachyOS + DMS 새 설치 스크립트 · 패키
 
 | 문서 | 내용 |
 | --- | --- |
-| [SETUP.md](SETUP.md) | **새 환경 세팅** — 심링크 매핑, 필수 도구와 이유, 언어 툴체인, 선택 기능, 첫 실행 체크리스트, CachyOS + DMS 새 설치(§10), fisher · sdkman 관리(§11) |
+| [SETUP.md](SETUP.md) | **새 환경 세팅** — 심링크 매핑, 필수 도구와 이유, 언어 툴체인, 선택 기능, 첫 실행 체크리스트, CachyOS + DMS 새 설치(§10), fisher · sdkman 관리(§11), 디스크 정리(§12) |
 | [docs/guide.html](docs/guide.html) | **기능 가이드** — 워크플로별로 "언제 · 어떻게" 직접 해보며 익히는 페이지 |
 | [TOOLS.md](TOOLS.md) | 개인 CLI/TUI 도구 카탈로그 (용도 · 언제 · 설치) |
 | [REFACTOR.md](REFACTOR.md) | 설정 리팩터링 기록 · 작성 규칙 · 결정 사항 · 사고 기록 |
