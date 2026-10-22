@@ -366,6 +366,11 @@ sdk flush tmp                     # 내려받은 zip 캐시 정리 (~/.sdkman/tm
   버전을 바꾸면 `setup.sh` 의 `java_id` 도 같이 바꿀 것
 - **다운로드가 `Download has failed` 로 끝나면**: sdkman 기본 설정이 다운로드를 10초에 끊는다(`sdkman_curl_max_time=10`).
   `sed -i 's/^sdkman_curl_max_time=.*/sdkman_curl_max_time=600/' ~/.sdkman/etc/config` (setup.sh 는 설치할 때만 늘려 쓴다)
+- **맥에서 fish 를 열 때 `sdkman-path-helpers.sh: … ${candidate_name^^}: bad substitution`** 이 뜨면 sdkman 이 5.23.2 미만이다.
+  sdkman-for-fish 는 그냥 `bash` 를 부르는데 맥의 `/bin/bash` 는 3.2 라 bash 4 문법을 모른다. 에러 자체보다
+  **그 줄에서 초기화가 끊겨 PATH 에 sdkman 이 빠지는 게** 문제다 — `java` 가 맥 스텁 `/usr/bin/java` 로 잡힌다.
+  `sdk selfupdate force` 로 5.23.2 이상(sdkman-cli #1518 수정)으로 올리면 된다. Homebrew bash 는 필요 없다
+  (Intel 맥은 bottle 이 없어 의존성까지 소스 빌드가 된다). linux 는 bash 5 라 해당 없음
 - **jdtls 는 JDK 21 이상**에서만 돈다. JDK 를 바꾼 뒤 nvim 을 새 fish 터미널에서 열어야 반영된다 (GUI 런처 ✘ — §3)
 - sdkman 이 설치한 것은 `~/.sdkman` 한 곳에 모인다. 통째로 지우면 깨끗이 제거된다
 
