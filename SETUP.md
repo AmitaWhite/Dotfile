@@ -269,7 +269,29 @@ DMS 는 자체 잠금 화면 대신 외부 명령을 쓰게 할 수 있다. 둘 
   niri 가 "refusing lock as already locked" 로 거절하던 경합이 생긴다. DMS 를 거치면 한 번만 뜬다
 - 덮개를 닫으면 영상 로딩(약 2초) 때문에 잠금 화면이 조금 늦게 뜬다 — 정상
 
-### 10-4. 잠금 화면에서 맞는 비밀번호가 거부될 때
+### 10-4. 앱들이 DMS 색을 따라가는 방법
+
+DMS 는 배경화면 · 라이트/다크가 바뀔 때마다 matugen 으로 Material3 색을 뽑고, 앱마다 색 파일을 만든다.
+저장소는 그 파일을 **참조만** 한다 (색 자체는 담지 않는다).
+
+| 앱 | 방법 |
+| --- | --- |
+| foot | `foot.ini` 가 DMS 생성 `~/.config/foot/dank-colors.ini` 를 `include` |
+| ghostty | `theme = dankcolors` (DMS 생성 `~/.config/ghostty/themes/dankcolors`) |
+| fastfetch · fish 인사말 | 터미널 16색 번호만 쓴다 → 위 터미널 팔레트를 그대로 따라감 |
+| **btop** | DMS 가 안 만들어 주므로 **matugen 사용자 템플릿**: `linux/matugen/templates/btop.theme` → `~/.config/btop/themes/dank.theme`, `btop.conf` 의 `color_theme = "dank"` |
+| nvim | tokyonight day/night 를 터미널 배경 밝기로 고른다 (README) |
+
+**matugen 사용자 템플릿** (`linux/matugen` → `~/.config/matugen` 링크): DMS 설정 Theme → *Run User Templates*(기본 켜짐)이면
+DMS 가 색을 뽑을 때 `~/.config/matugen/config.toml` 의 템플릿도 함께 돌린다. 템플릿에선 Material3 색 `{{colors.<역할>.default.hex}}`
+과 DMS 의 터미널 16색 `{{dank16.colorN.default.hex}}` 를 쓸 수 있다. 다른 앱도 같은 식으로 추가하면 된다.
+
+- ⚠️ `config.toml` 에는 **빈 `[templates]` 줄이 반드시** 있어야 하고, 그 줄보다 위에 같은 글자를 쓰면 안 된다 (주석 포함).
+  DMS 가 그 글자가 처음 나오는 곳부터 잘라 붙이기 때문 — 어기면 TOML 오류로 **DMS 의 색 생성 전체가 실패**한다
+  (`journalctl --user | grep -i matugen` 로 확인). 파일 머리 주석에 이유를 적어 뒀다
+- 바로 다시 만들어 보려면: `dms ipc call theme toggle` 두 번 (다크 ↔ 라이트 왕복)
+
+### 10-5. 잠금 화면에서 맞는 비밀번호가 거부될 때
 
 CachyOS 기본 `pam_faillock` 은 **3번 틀리면 10분간** 계정을 잠근다. 그동안은 맞는 비밀번호도 `access denied` 이고 sudo 도 막힌다.
 

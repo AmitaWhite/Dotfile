@@ -120,7 +120,7 @@ nvim 0.12.4 가 `libtree-sitter.0.26.dylib` 에 동적 링크돼 있어 nvim 이
       샌드박스 7개 시나리오 검증 (최초 링크 · 멱등 · **도구가 덮어쓴 뒤 재실행** · pull · same · 없음 · unlink)
 - [x] `links.txt` 에서 `linux/hypr` 링크 제거 — hyprland 시절 설정. 파일은 `linux/hypr/` 에 보관
 - [x] `niri/config.kdl` 을 `pull` 모드로 전환
-- [x] btop `caelestia.theme` 는 유지 — 유물이 아니라 `btop.conf` 의 `color_theme = "caelestia"` 가 참조한다
+- [x] btop `caelestia.theme` 는 유지 — 유물이 아니라 `btop.conf` 의 `color_theme = "caelestia"` 가 참조한다 (2026-10-22: matugen 템플릿 `dank` 로 교체, archive 로)
 - [x] **리눅스에서 확인할 것** — 2026-10-21 CachyOS(niri 26.04 · dms-shell 1.6.3) 에서 실측:
   - [x] DMS 의 `config.kdl` 을 저장소에 반영 (`61e93ad`). noctalia 시절 설정을 버리고 DMS 템플릿으로 교체
   - [x] DMS 는 터미널 설정을 **직접 고치지 않고 색 파일을 따로 생성**한다 — `~/.config/foot/dank-colors.ini`,
@@ -187,7 +187,7 @@ DMS 가 쓰는 파일 분류 (실측):
 
 **사고 기록**:
 - 패치 검증에 틀린 비밀번호 2번을 썼는데, 이어진 사용자 테스트의 1번과 합쳐 `pam_faillock`(3회 → 10분)에 걸렸다.
-  비밀번호 검증 테스트는 틀린 시도 횟수를 센다 — 실계정으로는 하지 말 것 (SETUP §10-4)
+  비밀번호 검증 테스트는 틀린 시도 횟수를 센다 — 실계정으로는 하지 말 것 (SETUP §10-5)
 - 설치 시뮬레이션에서 qylock clone(영상 포함 1.2GB)을 `/tmp` 로 복사 → `/tmp` 는 **tmpfs(RAM)** 라 RAM 4GB 기기에서
   systemd-oomd 가 앱을 강제 종료. 큰 파일은 복사하지 말고 링크하거나 디스크(`~/.cache`)에서 할 것
 

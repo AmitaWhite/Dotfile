@@ -27,7 +27,8 @@ linux  fish/linux/functions/fish_greeting.fish  ~/.config/fish/functions/fish_gr
 linux  fastfetch/config.jsonc                   ~/.config/fastfetch/config.jsonc
 linux  linux/foot/foot.ini                      ~/.config/foot/foot.ini
 linux  linux/btop/btop.conf                     ~/.config/btop/btop.conf
-linux  linux/btop/themes/caelestia.theme        ~/.config/btop/themes/caelestia.theme
+# btop 테마는 matugen 템플릿이 DMS 색으로 생성한다 (themes/dank.theme, 저장소엔 템플릿만)
+linux  linux/matugen                            ~/.config/matugen
 # linux/hypr 은 hyprland 시절 설정. 지금은 niri 를 쓰므로 링크하지 않고 보관만 한다.
 # niri config.kdl 은 DankMaterialShell 이 생성·관리한다 (Material3 색상 반영 포함).
 # 심링크를 걸면 DMS 저장 시 심링크가 일반 파일로 바뀌고 다음 link.sh 가 저장소 것으로 되돌린다.

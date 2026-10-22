@@ -1,0 +1,14 @@
+# matugen 사용자 설정. DMS 가 색을 다시 뽑을 때 여기 템플릿도 함께 돌린다 (DMS: Theme → Run User Templates, 기본 켜짐).
+#
+# 주의 1) DMS 는 이 파일에서 대괄호로 감싼 templates 글자(아래 빈 테이블 줄)가 "처음 나오는 곳"부터 끝까지를
+#         잘라 자기 설정 뒤에 붙인다 (DMS core/internal/matugen extractTOMLSection). 그래서
+#         - 아래 빈 templates 테이블 줄이 꼭 있어야 하고 (templates.btop 만 있으면 통째로 무시된다)
+#         - 그 줄보다 위(이 주석 포함)에 그 글자를 그대로 쓰면 안 된다 — 주석 중간부터 잘려 TOML 오류가 나고
+#           DMS 의 색 생성 전체가 실패한다 (2026-10-22 실제로 겪음)
+# 주의 2) 템플릿에선 DMS 가 넣어주는 dank16(터미널 16색)과 matugen 의 Material3 색(colors.*)을 쓸 수 있다.
+
+[templates]
+
+[templates.btop]
+input_path = "~/.config/matugen/templates/btop.theme"
+output_path = "~/.config/btop/themes/dank.theme"
