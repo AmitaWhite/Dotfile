@@ -32,8 +32,10 @@
     }
   },
   "textRenderQuality": 3,
+  "lockBeforeSuspend": true,
   "muxType": "zellij",
   "osdPowerProfileEnabled": true,
+  "customPowerActionLock": "~/.local/share/quickshell-lockscreen/lock.sh",
   "updaterIntervalSeconds": 86400,
   "barConfigs": [
     {
@@ -81,7 +83,7 @@
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
       "fontScale": 1,
-      "iconScale": 1,
+      "iconScale": 0.85,
       "autoHide": false,
       "autoHideStrict": false,
       "autoHideDelay": 250,
@@ -190,7 +192,5 @@
       "trigger": "qrg"
     }
   },
-  "configVersion": 18,
-  "customPowerActionLock": "~/.local/share/quickshell-lockscreen/lock.sh",
-  "lockBeforeSuspend": true
+  "configVersion": 18
 }
