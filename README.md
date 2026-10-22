@@ -124,10 +124,13 @@ mason 자동설치: `stylua`, `shellcheck`, `shfmt`, `lemminx`. **rust-analyzer 
 
 - **Picker 는 `snacks.picker`**, 입력창은 `snacks.input` (telescope · dressing 제거함)
 - **창 테두리는 `vim.opt.winborder`** 한 곳에서 제어 (`options.lua`). noice / lazy 는 미지원이라 각자 설정
-- **다크/라이트**: nvim 이 시작할 때 터미널 배경색을 감지(OSC 11)하고, 그에 맞춰 `tokyonight-day` / `tokyonight-night` 를
-  직접 고른다 (`colorscheme.lua` — tokyonight 이 로드 시 background 를 dark 로 덮어쓰는 문제 회피). 셸 호출 없음.
-  **터미널도 OS 를 따라가야** 실제로 전환됨 → linux: DMS 가 foot · ghostty 색을 생성 / mac ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Moon`.
-  실행 중 OS 테마를 바꾸면 nvim 을 다시 열거나 `:set background=light|dark`
+- **다크/라이트**: nvim 이 터미널 배경색을 감지(OSC 11)해 `tokyonight-day` / `tokyonight-night` 를 직접 고른다
+  (`colorscheme.lua` — tokyonight 이 로드 시 background 를 dark 로 덮어쓰는 문제 회피). 셸 호출 없음.
+  **실행 중 전환도 따라간다** — nvim 은 터미널의 테마 변경 알림(DEC 2031)을 구독하지 않으므로,
+  창에 포커스가 돌아올 때 OSC 11 을 다시 물어본다 (`autocmds.lua`). 응답 처리는 nvim 내장.
+  **터미널도 OS 를 따라가야** 실제로 전환됨 → linux: DMS 가 foot · ghostty 색을 생성 /
+  mac ghostty: `theme = light:TokyoNight Day,dark:TokyoNight Night`
+  (다크가 Moon 이 아니라 Night 인 이유: nvim · helix 가 night 팔레트라 Moon 은 ANSI 16색이 통째로 어긋난다)
 - colorscheme 는 tokyonight, `transparent = true`
 - **Markdown**: 맞춤법 검사는 영어만(`spelllang = en,cjk` — 한글 제외). markdownlint 는 시끄러운 스타일 규칙(줄 길이 · 빈 줄 · HTML · 굵게-제목 · 첫 줄 제목)을 끈 `nvim/.markdownlint-cli2.yaml` 을 린터 · 포맷터 양쪽에 준다
 

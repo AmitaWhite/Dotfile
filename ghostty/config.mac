@@ -1,9 +1,15 @@
 # theme = Gruvbox Dark
-# OS 라이트/다크를 따라감. nvim 은 이 배경색을 감지해 tokyonight day/night 를 자동 선택한다 (nvim README 참고)
-theme = light:TokyoNight Day,dark:TokyoNight Moon
+# OS 라이트/다크를 따라감. nvim 은 이 배경색을 감지해 tokyonight day/night 를 자동 선택한다 (nvim README 참고).
+# 다크는 Moon 이 아니라 Night: nvim · helix 가 night 팔레트라, Moon 을 쓰면 배경뿐 아니라 ANSI 16색이 통째로
+# 달라져 16색을 쓰는 것들(fish 프롬프트 · lazygit · btop)과 에디터의 색이 갈린다
+theme = light:TokyoNight Day,dark:TokyoNight Night
 macos-titlebar-style = tabs
 background-opacity = 0.85
 background-blur=true
+
+# linux(config.arch) 와 같은 안쪽 여백
+window-padding-x = 12
+window-padding-y = 12
 
 # 커서를 그 밑 글자 색의 반전으로 그린다 (helix 의 ui.cursor = reversed 와 같은 모양).
 # nvim 의 Cursor 그룹은 고정 흰색이라 터미널 쪽에서 맞추는 게 확실하다.
