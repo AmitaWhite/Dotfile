@@ -14,6 +14,10 @@ window-padding-x = 12
 window-padding-y = 12
 background-opacity = 0.78
 
+# niri 의 Mod+T(새 터미널)가 ghostty 를 띄운다. 이미 떠 있는 ghostty 가 창만 새로 열게 해 빠르고 메모리를 아낀다
+# (기본값 desktop 은 .desktop 으로 띄울 때만 단일 인스턴스 — niri spawn 은 해당 안 됨)
+gtk-single-instance = true
+
 # background-opacity = 0.8
 # background-blur = true
 # background-blur-radius = 20
@@ -26,5 +30,38 @@ keybind = ctrl+shift+o=unbind
 keybind = ctrl+shift+e=unbind
 keybind = super+d=new_split:right
 keybind = super+shift+d=new_split:down 
+
+## -- 분할 닫기 · 탭 번호 (linux)
+# Super(Cmd)+W: 현재 분할 닫기 (마지막 분할이면 탭이 닫힌다) — 맥 ⌘W 와 같은 동작. niri 의 Mod+W 는 비워 둠(브라우저는 Mod+B)
+keybind = super+w=close_surface
+# 탭 번호 이동은 Ctrl+1~9. 기본 Alt+1~9 는 지운다
+# (새 탭 · 탭 닫기는 기본 Ctrl+Shift+T / Ctrl+Shift+W 유지 — Ctrl+T · Ctrl+W 는 nvim 창 명령 · 셸 단어 지우기와 겹친다)
+keybind = ctrl+digit_1=goto_tab:1
+keybind = ctrl+digit_2=goto_tab:2
+keybind = ctrl+digit_3=goto_tab:3
+keybind = ctrl+digit_4=goto_tab:4
+keybind = ctrl+digit_5=goto_tab:5
+keybind = ctrl+digit_6=goto_tab:6
+keybind = ctrl+digit_7=goto_tab:7
+keybind = ctrl+digit_8=goto_tab:8
+keybind = ctrl+digit_9=goto_tab:9
+keybind = alt+digit_1=unbind
+keybind = alt+1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+3=unbind
+keybind = alt+digit_4=unbind
+keybind = alt+4=unbind
+keybind = alt+digit_5=unbind
+keybind = alt+5=unbind
+keybind = alt+digit_6=unbind
+keybind = alt+6=unbind
+keybind = alt+digit_7=unbind
+keybind = alt+7=unbind
+keybind = alt+digit_8=unbind
+keybind = alt+8=unbind
+keybind = alt+digit_9=unbind
+keybind = alt+9=unbind
 
 # quick-terminal(alt+space) 은 mac(config.mac) 에서만. linux 에선 DMS spotlight 가 alt+space 를 쓴다.

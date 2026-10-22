@@ -182,11 +182,26 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
 ## 9. 환경별 주의
 
 - **macOS (Intel)**: Homebrew 가 x86_64 지원을 종료해 bottle 이 없는 포뮬러는 소스 빌드로 빠진다. nvim 런타임 의존성(tree-sitter, libuv)은 단독 업그레이드 금지 — `brew upgrade` 로 함께.
-- **foot 에 없는 것 → nvim 코딩은 ghostty 로** (평소 셸은 foot, 둘 다 DMS 색 · nvim day/night 는 같다)
+- **linux 주 터미널은 ghostty** (niri `Mod+T`, 2026-10-22~). foot 은 가벼운 보조 — 둘 다 DMS 색 · 글꼴 · 여백 · nvim day/night 가 같다.
+  foot 에 없는 것:
   - 리가처: foot 은 설계상 미지원. JetBrains Mono 의 `=>` `!=` 등은 ghostty 에서만
   - 글자색에 따라 바뀌는 커서(helix 모양): ghostty 의 `cursor-invert-fg-bg` 기능. foot 의 커서는 고정 두 색뿐이고,
     지금은 DMS 의 `dank-colors.ini` 가 `cursor = fff8f6 715952`(Material primary)로 정한다.
     helix 는 커서를 직접 그려 어느 터미널에서나 그 모양이지만, nvim 은 터미널 커서를 쓴다
+- **ghostty 단축키 (linux, `ghostty/config.arch`)** — Super = Cmd. Super 조합은 niri 가 먼저 가져가므로 niri 에서 빈 키만 쓴다
+
+  | 키 | 동작 |
+  | --- | --- |
+  | `Super+D` / `Super+Shift+D` | 오른쪽 / 아래로 분할 (맥 ⌘D · ⌘⇧D) |
+  | `Ctrl+Alt+←↑↓→` · `Super+Ctrl+[ ]` | 분할 사이 이동 · 이전/다음 분할 |
+  | `Super+Ctrl+Shift+←↑↓→` · `Ctrl+Shift+Enter` | 분할 크기 · 현재 분할만 크게 |
+  | `Super+W` | 현재 분할 닫기 (마지막이면 탭 닫힘, 맥 ⌘W) |
+  | `Ctrl+Shift+T` / `Ctrl+Shift+W` | 새 탭 / 탭 통째로 닫기 |
+  | `Ctrl+1~9` | 번호 탭으로 (기본 Alt+1~9 는 지움) |
+
+  `Ctrl+T` · `Ctrl+W` 로 탭을 열고 닫지 않는 이유: ghostty 가 가로채면 nvim 의 창 명령(`Ctrl+W h/j/k/l` …) ·
+  셸의 단어 지우기 · fzf 의 파일 찾기(`Ctrl+T`)가 막힌다. 맥은 Cmd 가 터미널 프로그램으로 안 가서 괜찮은 것.
+  niri 쪽: 새 터미널 `Mod+T` = ghostty(`gtk-single-instance` 로 창만 새로), 브라우저 `Mod+B`(`Mod+W` 를 비우려고 옮김)
 - **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrains-mono-nerd`, `wl-clipboard`. 고른 패키지 전체는 [linux/packages.txt](linux/packages.txt) (§10).
 - **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 kime 패키지가 `/etc/xdg/autostart/kime.desktop` 로 등록한다
   (지금 기기엔 DMS 시작 앱으로 만든 `~/.config/autostart/kime.desktop` 가 이를 덮지만 결과는 같다 — 따로 할 일 없음).

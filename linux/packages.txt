@@ -19,8 +19,8 @@ dms     dankcalendar-bin
 
 # ---- 데스크톱 ----
 pacman  sddm                        # 로그인 화면. qylock enfield 테마를 쓴다
-pacman  foot                        # 리눅스 기본 터미널 (Mod+T)
-pacman  ghostty                     # mac 과 같은 터미널. DMS 설치 프로그램도 넣는다
+pacman  foot                        # 가벼운 보조 터미널 (주 터미널은 ghostty)
+pacman  ghostty                     # 주 터미널 (niri Mod+T) · mac 과 같은 것. DMS 설치 프로그램도 넣는다
 pacman  nautilus                    # 파일 관리자 (thunar 대신)
 pacman  xdg-desktop-portal-gnome    # niri 의 화면 공유 · 파일 선택 포털
 pacman  xdg-desktop-portal-gtk
