@@ -131,8 +131,8 @@ binds {
     Mod+Shift+E { quit; }
     Mod+Ctrl+Q hotkey-overlay-title="lock screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
     Mod+E hotkey-overlay-title="open file manager" { spawn "nautilus"; }
-    Mod+T hotkey-overlay-title="terminal" { spawn "ghostty"; }
-    Mod+B hotkey-overlay-title="open zen browser" { spawn "zen-browser"; }
+    Mod+T repeat=false hotkey-overlay-title="terminal" { spawn "ghostty"; }
+    Mod+B repeat=false hotkey-overlay-title="open zen browser" { spawn "zen-browser"; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+O repeat=false { toggle-overview; }
     Mod+Shift+Slash { show-hotkey-overlay; }
