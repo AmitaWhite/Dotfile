@@ -7,6 +7,13 @@
 # DMS 가 Material3 색으로 생성하는 테마 (~/.config/ghostty/themes/dankcolors)
 theme = dankcolors
 
+# foot(linux/foot/foot.ini)과 같은 모양: 글꼴 · 크기 · 안쪽 여백 · 배경 불투명도
+font-family = JetBrainsMono Nerd Font
+font-size = 11
+window-padding-x = 12
+window-padding-y = 12
+background-opacity = 0.78
+
 # background-opacity = 0.8
 # background-blur = true
 # background-blur-radius = 20
