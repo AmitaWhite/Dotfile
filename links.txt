@@ -21,7 +21,6 @@ mac    fish/mac/functions/fish_greeting.fish    ~/.config/fish/functions/fish_gr
 
 # ---- linux (Arch / CachyOS / WSL) ----
 linux  ghostty/config.arch                      ~/.config/ghostty/config
-linux  ghostty/tabs.css                         ~/.config/ghostty/tabs.css
 linux  fish/linux/config.fish                   ~/.config/fish/config.fish
 linux  fish/linux/fish_plugins                  ~/.config/fish/fish_plugins
 linux  fish/linux/functions/fish_greeting.fish  ~/.config/fish/functions/fish_greeting.fish

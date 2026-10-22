@@ -297,6 +297,7 @@ DMS 는 배경화면 · 라이트/다크가 바뀔 때마다 matugen 으로 Mate
 | ghostty | `theme = dankcolors` (DMS 생성 `~/.config/ghostty/themes/dankcolors`) |
 | fastfetch · fish 인사말 | 터미널 16색 번호만 쓴다 → 위 터미널 팔레트를 그대로 따라감 |
 | **btop** | DMS 가 안 만들어 주므로 **matugen 사용자 템플릿**: `linux/matugen/templates/btop.theme` → `~/.config/btop/themes/dank.theme`, `btop.conf` 의 `color_theme = "dank"` |
+| ghostty 탭 바 | 같은 방식: `linux/matugen/templates/ghostty-tabs.css` → `~/.config/ghostty/tabs.css` (터미널 배경색 · 78% 를 탭 바에도 깔아 이어지게) |
 | nvim | tokyonight day/night 를 터미널 배경 밝기로 고른다 (README) |
 
 **matugen 사용자 템플릿** (`linux/matugen` → `~/.config/matugen` 링크): DMS 설정 Theme → *Run User Templates*(기본 켜짐)이면

@@ -12,3 +12,8 @@
 [templates.btop]
 input_path = "~/.config/matugen/templates/btop.theme"
 output_path = "~/.config/btop/themes/dank.theme"
+
+# 템플릿 이름에 하이픈을 쓰지 않는다 — ghostty-tabs 로는 DMS 재생성에서 출력이 안 생겼다(이름만 바꾸니 생성됨, 원인 미확정)
+[templates.ghosttytabs]
+input_path = "~/.config/matugen/templates/ghostty-tabs.css"
+output_path = "~/.config/ghostty/tabs.css"

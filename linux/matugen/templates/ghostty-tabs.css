@@ -1,0 +1,42 @@
+/* ghostty(linux, GTK4 · libadwaita) 탭 바 — matugen 템플릿. DMS 가 색을 뽑을 때 함께 만든다
+   (linux/matugen/config.toml). 출력: ~/.config/ghostty/tabs.css ← config.arch 의 gtk-custom-css
+   탭 바 배경을 터미널과 같은 색 · 같은 불투명도(background-opacity 0.78)로 깔아 한 장처럼 이어지게.
+   노드 구조(libadwaita): toolbarview > .top-bar > ... > tabbar > .box > ... > tab
+   실시간으로 고쳐 보려면: GTK_DEBUG=interactive ghostty  (GTK Inspector) */
+
+/* 배경은 바깥 막대 한 겹에만 — 여러 겹에 깔면 겹쳐서 더 진해진다 */
+toolbarview > .top-bar {
+  background: alpha({{colors.background.default.hex}}, 0.78);
+  box-shadow: none;
+}
+tabbar,
+tabbar .box {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* 탭 바 높이: 위아래 여백 없이 */
+tabbar .box {
+  min-height: 0;
+  padding: 0 4px;
+}
+
+/* 탭 하나 */
+tabbar tab {
+  min-height: 18px;
+  margin: 2px 0;
+  padding: 0 6px;
+  font-size: 9.5pt;
+}
+
+/* 고른 탭만 옅게 구분 */
+tabbar tab:selected {
+  background: alpha({{colors.on_surface.default.hex}}, 0.12);
+}
+
+/* 닫기(×) 버튼 작게 */
+tabbar tab button.image-button {
+  min-height: 14px;
+  min-width: 14px;
+  padding: 0;
+}
