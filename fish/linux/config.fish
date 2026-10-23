@@ -49,6 +49,7 @@ if status is-interactive
     abbr cat bat
     abbr th nautilus
     abbr zd zeditor
+    abbr hx helix
 
     # CLI - Youtube Music Player
     abbr sb shellbeats
