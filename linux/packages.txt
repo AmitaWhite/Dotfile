@@ -31,6 +31,8 @@ pacman  cava                        # DMS 오디오 시각화
 pacman  wev                         # Wayland 키 이름 확인 (kime 단축키 디버깅)
 pacman  ttf-jetbrains-mono-nerd     # foot · ghostty 글꼴, nvim 리가처
 pacman  wl-clipboard                # nvim ↔ 시스템 클립보드
+pacman  imagemagick                 # 창 캡처에 둥근 모서리와 그림자 (linux/bin/screenshot-window)
+pacman  libnotify                   # notify-send (캡처 알림)
 
 # ---- 잠금 · 로그인 화면 (qylock) ----
 # SDDM 로그인 화면과 quickshell 잠금 화면이 같은 테마(enfield)를 쓴다. 테마 자체는 setup.sh 가 설치.

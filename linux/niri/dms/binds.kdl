@@ -133,6 +133,9 @@ binds {
     Mod+E hotkey-overlay-title="open file manager" { spawn "nautilus"; }
     Mod+T repeat=false hotkey-overlay-title="terminal" { spawn "ghostty"; }
     Mod+B repeat=false hotkey-overlay-title="open zen browser" { spawn "zen-browser"; }
+    Alt+Shift+3 repeat=false hotkey-overlay-title="Screenshot: Full Screen (mac ⌘⇧3)" { spawn "dms" "screenshot" "full"; }
+    Alt+Shift+4 repeat=false hotkey-overlay-title="Screenshot: Region (mac ⌘⇧4)" { spawn "dms" "screenshot" "region"; }
+    Alt+Shift+5 repeat=false hotkey-overlay-title="Screenshot: Window with shadow (mac ⌘⇧4 Space)" { spawn "~/.local/bin/screenshot-window"; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+O repeat=false { toggle-overview; }
     Mod+Shift+Slash { show-hotkey-overlay; }

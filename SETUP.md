@@ -404,3 +404,23 @@ GUI 가 편하면 `baobab`(GNOME 디스크 사용량 분석기)을 깔아 쓴다
   root 로 실행하는 모드는 시스템 파일까지 건드리므로 항목을 확인하고 쓸 것
 - 지우기 전에 늘 **목록부터** 본다: `paccache -dk1`(dry-run), `pacman -Qdtq`
 
+## 13. 스크린샷 (맥 단축키와 비슷하게)
+
+niri 단축키는 `linux/niri/dms/binds.kdl`에 있다. 맥의 ⌘⇧ 자리를 Alt+Shift로 옮겼다.
+niri에서 비어 있던 조합이라 겹치는 것이 없다 (Alt+Shift는 창 전환 `Alt+Shift+Tab`만 쓴다).
+
+| 키 | 동작 | 맥 |
+| --- | --- | --- |
+| `Alt+Shift+3` | 전체 화면 (`dms screenshot full`) | ⌘⇧3 |
+| `Alt+Shift+4` | 영역 선택 (`dms screenshot region`) | ⌘⇧4 |
+| `Alt+Shift+5` | 포커스된 창 + 둥근 모서리, 그림자, 투명 여백 | ⌘⇧4 후 Space |
+
+모두 `~/Pictures/Screenshots`에 저장되고 클립보드에도 복사된다.
+
+창 캡처는 `linux/bin/screenshot-window` 스크립트가 한다 (`~/.local/bin`에 링크).
+DMS가 창을 PNG로 넘겨주면 ImageMagick으로 모서리를 깎고 그림자를 넣는다. 모서리 크기, 그림자, 여백은 스크립트 맨 위 변수로 바꾼다.
+
+- 필요한 패키지: `imagemagick`, `wl-clipboard`, `libnotify` (`packages.txt`에 있다)
+- 새로 설치할 때는 `setup.sh`가 패키지 설치, 스크립트 링크, 단축키(binds.kdl 복원)를 모두 한다
+- 꾸미기나 화살표 넣기가 필요하면 Gradia(`pacman -S gradia`)로 저장된 이미지를 연다. 지금은 깔지 않았다
+

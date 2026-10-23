@@ -38,6 +38,7 @@ fish/        mac/, linux/
 starship/    starship.toml
 fastfetch/   config.jsonc (linux)
 linux/       niri, dms, foot, btop, kime, qylock, matugen (linux 전용)
+             bin/screenshot-window: 맥처럼 그림자 넣은 창 캡처 (~/.local/bin 에 링크)
              hypr 는 예전 설정이라 링크하지 않고 보관만
              setup.sh, packages.txt: CachyOS + DMS 새 설치용
 archive/     안 쓰지만 남겨둔 것 (wezterm, paneru, thunar, 예전 nvim 설정)

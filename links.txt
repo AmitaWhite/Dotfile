@@ -43,3 +43,5 @@ linux  linux/dms/plugin_settings.json           ~/.config/DankMaterialShell/plug
 # DMS 플러그인 목록 + 고정 커밋. 파일만으론 플러그인이 안 깔린다 — setup.sh restore 가 `dms plugins restore` 로 설치
 linux  linux/dms/plugins.lock.json              ~/.config/DankMaterialShell/plugins.lock.json pull
 linux  linux/kime/config.yaml                 ~/.config/kime/config.yaml
+# 맥처럼 그림자 넣은 창 캡처 (niri Alt+Shift+5)
+linux  linux/bin/screenshot-window            ~/.local/bin/screenshot-window

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# 맥의 창 캡처(⌘⇧4 → Space)처럼 포커스된 창을 찍어 둥근 모서리, 그림자, 투명 여백을 넣는다.
+# niri 의 Alt+Shift+5 가 부른다 (linux/niri/dms/binds.kdl). 저장소 linux/bin → ~/.local/bin 링크.
+#
+# 결과: ~/Pictures/Screenshots/Screenshot from <날짜 시각>.png (배경이 투명한 PNG) + 클립보드 + 알림
+# 필요: dms(창 캡처), imagemagick(magick), wl-clipboard(wl-copy), libnotify(notify-send)
+set -euo pipefail
+
+radius=12   # 모서리. niri 의 창 모서리(dms/layout.kdl 의 geometry-corner-radius 12)와 같게
+shadow=45x22+0+12   # 그림자: 진하기(%)x번짐 +가로 +세로 위치
+margin=36   # 그림자가 잘리지 않게 두는 투명 여백(px)
+
+dir="$HOME/Pictures/Screenshots"
+out="$dir/Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png"
+mkdir -p "$dir"
+
+tmp=$(mktemp --suffix=.png)
+trap 'rm -f "$tmp"' EXIT
+
+# DMS 가 포커스된 창을 PNG 로 넘겨준다. 파일 저장, 클립보드, 알림은 아래에서 직접 한다
+dms screenshot window --stdout --no-file --no-clipboard --no-notify >"$tmp"
+
+# 모서리를 깎은 뒤 -compose Over 로 되돌린다. DstIn 이 남아 있으면 뒤의 -layers merge 와 -border 까지
+# DstIn 으로 합쳐져 이미지가 통째로 투명해진다
+magick "$tmp" -alpha set \
+  \( +clone -alpha transparent -fill white \
+     -draw "roundrectangle 0,0 %[fx:w-1],%[fx:h-1] $radius,$radius" \) \
+  -compose DstIn -composite -compose Over \
+  \( +clone -background black -shadow "$shadow" \) +swap \
+  -background none -layers merge +repage \
+  -bordercolor none -border "$margin" \
+  "$out"
+
+wl-copy --type image/png <"$out"
+notify-send --app-name=Screenshot --icon="$out" "창을 캡처했습니다" "$(basename "$out")"
