@@ -29,15 +29,31 @@ return {
           includeLanguages = { jsp = "html" }, -- emmet 이 jsp 를 html 문법으로 펼치게
         },
       },
-      -- JS/TS 에서 eslint 와 vtsls 가 "안 쓰는 변수 · import" 를 각각 보고해 한 줄에 두 번씩 뜬다
-      -- (vtsls HINT 'declared but its value is never read' + eslint WARN no-unused-vars, 실측).
-      -- eslint 가 붙은 버퍼에서만 vtsls 쪽 해당 코드를 버린다. eslint 없는 프로젝트에선 vtsls 것이 그대로 남는다.
-      -- 흐리게 표시(unnecessary 태그)는 eslint 진단에도 있어 유지된다.
+      -- biome: 프로젝트에 eslint 설정이 없으면 biome.json 이 없어도 붙인다 (판단은 lua/util/jslint.lua).
+      -- lspconfig 기본값은 biome.json 이 있을 때만 붙는데, 설정 없는 새 프로젝트나 연습용 폴더도 biome 이 맡게 한다.
+      -- eslint 쪽은 lspconfig 가 이미 eslint 설정이 있을 때만 붙인다.
+      biome = {
+        workspace_required = false,
+        root_dir = function(bufnr, on_dir)
+          if require("util.jslint").uses_biome(bufnr) then
+            on_dir(vim.fs.root(bufnr, { "biome.json", "biome.jsonc", "package.json", ".git" }) or vim.fn.getcwd())
+          end
+        end,
+      },
+      -- JS/TS 에서 린터(eslint 나 biome)와 vtsls 가 "안 쓰는 변수와 import" 를 각각 보고해 한 줄에 두 번씩 뜬다
+      -- (vtsls HINT 'declared but its value is never read' + eslint no-unused-vars 또는 biome noUnusedVariables, 실측).
+      -- 린터가 붙은 버퍼에서만 vtsls 쪽 해당 코드를 버린다. 린터가 없으면 vtsls 것이 그대로 남는다.
+      -- 흐리게 표시(unnecessary 태그)는 린터 진단에도 있어 유지된다.
       vtsls = {
         handlers = {
           ["textDocument/publishDiagnostics"] = function(err, result, ctx)
             local bufnr = result and vim.uri_to_bufnr(result.uri)
-            if bufnr and #vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" }) > 0 then
+            local linted = bufnr
+              and (
+                #vim.lsp.get_clients({ bufnr = bufnr, name = "eslint" }) > 0
+                or #vim.lsp.get_clients({ bufnr = bufnr, name = "biome" }) > 0
+              )
+            if linted then
               -- 6133 선언했지만 안 읽음 · 6138 안 쓰는 속성 · 6192 import 전체 미사용
               -- 6196 안 쓰는 타입 선언 · 6198 구조분해 전체 미사용
               local unused = { [6133] = true, [6138] = true, [6192] = true, [6196] = true, [6198] = true }

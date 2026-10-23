@@ -73,6 +73,8 @@ lua/config/
   autocmds.lua            PDF 페이지 넘기기, 터미널 테마 따라가기
 lua/plugins/*.lua         플러그인별 설정 (파일 하나에 플러그인 하나)
   lsp.lua                 LSP 서버 설정. extras 가 안 다루는 서버와 기본값을 바꾼 것만
+  conform.lua             JS/TS 포맷터를 프로젝트에 따라 하나만 (prettier 또는 biome)
+lua/util/jslint.lua       JS/TS 프로젝트가 eslint 를 쓰는지 biome 을 쓰는지 판단 (lsp.lua, conform.lua 가 같이 씀)
 ```
 
 옵션, 키맵, 자동명령은 LazyVim이 `VeryLazy` 시점에 불러온다.
@@ -124,7 +126,7 @@ lua/plugins/*.lua         플러그인별 설정 (파일 하나에 플러그인 
 | ------ | -------------- | ---- |
 | Python | pyright + ruff | 진단은 ruff만 낸다. pyright는 자동완성, 정의 이동, hover 담당 (타입 에러는 표시 안 됨) |
 | SQL    | postgres_lsp   | sql extra에 LSP가 없어서 직접 추가 |
-| JS/TS  | vtsls + eslint | eslint가 붙은 버퍼에서는 vtsls의 "안 쓰는 변수, import" 진단을 버린다 (같은 경고가 두 번 뜨던 것) |
+| JS/TS  | vtsls + eslint 또는 biome | 프로젝트에 eslint 설정이 있으면 eslint와 prettier, 없으면 biome이 검사와 포맷을 맡는다. biome.json이 없어도 biome 기본 규칙으로 돌고, 이때 들여쓰기만 prettier와 같은 공백 2칸으로 맞춘다. 린터가 붙은 버퍼에서는 vtsls의 "안 쓰는 변수, import" 진단을 버린다 (같은 경고가 두 번 뜨던 것) |
 | HTML, JSP | html + emmet_language_server | JSP에서도 HTML 태그 완성과 Emmet. emmet은 html, jsp에만 켬 (React, CSS에는 안 켬) |
 
 Java(jdtls, lombok 포함)는 extras 기본값 그대로다.
@@ -133,6 +135,7 @@ mason이 자동으로 까는 것은 `stylua`, `shellcheck`, `shfmt`, `lemminx`. 
 ### 알아둘 것
 
 - 파일 찾기는 `snacks.picker`, 입력창은 `snacks.input`이다 (telescope와 dressing은 뺐다)
+- `K`(hover)는 설명이 없으면 아무것도 띄우지 않는다. JS에서는 vtsls와 tailwindcss가 둘 다 답해서 "No information available" 알림이 두 개씩 떴다
 - 창 테두리는 `options.lua`의 `vim.opt.winborder` 하나로 정한다. noice와 lazy 창은 이 옵션을 안 따라서 따로 설정했다
 - 다크/라이트: nvim이 터미널 배경색을 보고 `tokyonight-day`나 `tokyonight-night`를 고른다. nvim을 켜둔 채 OS 테마를 바꾸면 터미널 창을 다시 클릭할 때 따라온다(`autocmds.lua`). 터미널도 OS 테마를 따라가게 해둬야 하는데, 리눅스는 DMS가 foot과 ghostty 색을 만들어 주고, 맥 ghostty는 `theme = light:TokyoNight Day,dark:TokyoNight Night`로 해뒀다. 왜 이렇게 했는지는 REFACTOR.md에 있다
 - 색 테마는 tokyonight에 `transparent = true`
