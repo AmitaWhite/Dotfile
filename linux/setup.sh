@@ -2,7 +2,7 @@
 # CachyOS(No desktop) + DankMaterialShell(niri) 새 설치를 이 저장소 상태로 맞춘다.
 # 순서와 이유는 SETUP.md §10. 여러 번 돌려도 안전하다 — 이미 된 단계는 건너뛴다.
 #
-#   linux/setup.sh                 전체 (packages → link → shell → restore → qylock)
+#   linux/setup.sh                 전체 (packages → link → shell → restore → qylock → apps)
 #   linux/setup.sh qylock          특정 단계만 (여러 개 가능)
 #   linux/setup.sh --dry-run       무엇을 할지만 출력
 #
@@ -26,12 +26,12 @@ steps=()
 for a in "$@"; do
   case "$a" in
     --dry-run) dry=1 ;;
-    packages|link|shell|restore|qylock) steps+=("$a") ;;
+    packages|link|shell|restore|qylock|apps) steps+=("$a") ;;
     -h|--help) sed -n '2,10p' "$0"; exit 0 ;;
     *) echo "unknown: $a" >&2; exit 2 ;;
   esac
 done
-[ ${#steps[@]} -eq 0 ] && steps=(packages link shell restore qylock)
+[ ${#steps[@]} -eq 0 ] && steps=(packages link shell restore qylock apps)
 
 say()  { printf '\n\033[1;36m== %s\033[0m\n' "$*"; }
 note() { printf '   %s\n' "$*"; }
@@ -182,6 +182,25 @@ step_qylock() {
   else
     run sudo systemctl enable sddm
   fi
+}
+
+# ---- 6. 기본 앱 (~/.config/mimeapps.list) ----
+# 이미지는 Loupe 로. 아무것도 지정하지 않으면 zen 브라우저가 이미지를 연다.
+# Loupe 의 .desktop 이 다루는 MIME 형식 전부를 하나씩 지정한다 (xdg-mime 에 한 번에 넘기면 한 줄로 뭉친다)
+step_apps() {
+  say "기본 앱 — 이미지는 Loupe"
+  local desktop=/usr/share/applications/org.gnome.Loupe.desktop m
+  if [ ! -f "$desktop" ]; then
+    note "Loupe 가 없다 — packages 단계 먼저"
+    return
+  fi
+  if [ "$(xdg-mime query default image/png)" = org.gnome.Loupe.desktop ]; then
+    note "이미 Loupe"
+    return
+  fi
+  for m in $(grep '^MimeType=' "$desktop" | sed 's/^MimeType=//' | tr ';' ' '); do
+    run xdg-mime default org.gnome.Loupe.desktop "$m"
+  done
 }
 
 for s in "${steps[@]}"; do "step_$s"; done
