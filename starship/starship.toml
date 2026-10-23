@@ -3,7 +3,9 @@
 add_newline = false
 continuation_prompt = "[▸▹ ](dimmed white)"
 
-format = """($nix_shell$container$fill$git_metrics\n)$cmd_duration\
+# 윗줄: 경로(왼쪽)와 git 변경 줄 수(오른쪽). 경로를 오른쪽 프롬프트에서 옮겨 와서 입력 줄 오른쪽이 덜 붐빈다
+format = """$directory( $nix_shell$container)$fill$git_metrics
+$cmd_duration\
 $hostname\
 $localip\
 $shlvl\
@@ -17,7 +19,6 @@ $character"""
 right_format = """
 $singularity\
 $kubernetes\
-$directory\
 $vcsh\
 $fossil_branch\
 $git_branch\
