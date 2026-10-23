@@ -5,6 +5,12 @@
 #   MacBook Air(hid_apple swap_opt_cmd=0)에서 우측 Command 는 KEY_RIGHTMETA = SuperR.
 #   우측 Option(AltR)은 한영에서 빼서 일반 Alt 로 돌려준다.
 #   누르는 순간 Super 수식키가 함께 잡힐 수 있어 Super-SuperR 도 등록 (기본값의 M-AltR 과 같은 이유)
+# 트레이 아이콘 색 (kime 은 Black, White 둘뿐). DMS 다크면 White, 라이트면 Black.
+# 이 파일은 matugen 템플릿이다. DMS 가 색을 뽑을 때 ~/.config/kime/config.yaml 로 만들고
+# linux/bin/kime-follow-theme 이 색이 바뀌었으면 kime 을 다시 시작한다 (linux/matugen/config.toml)
+indicator:
+  icon_color: <* if {{ is_dark_mode }} *>White<* else *>Black<* endif *>
+
 engine:
   global_hotkeys:
     SuperR:

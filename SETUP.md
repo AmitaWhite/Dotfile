@@ -207,7 +207,9 @@ nvim                      플러그인 자동 설치 (lazy.nvim bootstrap). 끝�
 - **Arch / CachyOS**: 대부분 pacman 에 있음. `ttf-jetbrains-mono-nerd`, `wl-clipboard`. 고른 패키지 전체는 [linux/packages.txt](linux/packages.txt) (§10).
 - **한글 입력 (kime, CachyOS + DMS niri)**: 공식 저장소에 없어 AUR(`paru -S kime`). 자동 시작은 kime 패키지가 `/etc/xdg/autostart/kime.desktop` 로 등록한다
   (지금 기기엔 DMS 시작 앱으로 만든 `~/.config/autostart/kime.desktop` 가 이를 덮지만 결과는 같다 — 따로 할 일 없음).
-  설정은 `linux/kime/config.yaml` 링크 — **한영 = 우측 Command(`SuperR`)**, 우측 Option 은 일반 Alt 로 돌려줌.
+  설정은 matugen 템플릿 `linux/matugen/templates/kime.yaml`에서 DMS가 만든다. **한영 = 우측 Command(`SuperR`)**, 우측 Option 은 일반 Alt 로 돌려줌.
+  트레이 아이콘이 DMS 다크에선 흰색, 라이트에선 검은색이 되도록 템플릿으로 바꿨다 (kime 아이콘 색은 Black, White 둘뿐이라 다크 트레이에서 검은 아이콘이 묻혔다).
+  모드가 바뀌면 `linux/bin/kime-follow-theme`이 kime을 다시 시작한다 (1초쯤 입력이 끊긴다). 설정을 고칠 때는 템플릿을 고치고 DMS 다크/라이트를 한 번 오간다
   - `global_hotkeys` 는 맵 통째 교체라 기본 항목(Hangul · Super-Space · Esc …)도 함께 적혀 있다. 키 이름은 kime 엔진 기준(`SuperR` `AltR` `ControlR` …)
   - 우측 Command 는 niri 의 Mod 이기도 하다. 단독으로 눌렀다 떼면 한영, 누른 채 다른 키면 niri 단축키
   - 키가 안 먹으면 `wev -f wl_keyboard:key` 로 키 이름 확인 (MacBook 은 `hid_apple swap_opt_cmd=0` 에서 `Super_R`)
@@ -299,6 +301,7 @@ DMS 는 배경화면 · 라이트/다크가 바뀔 때마다 matugen 으로 Mate
 | fastfetch · fish 인사말 | 터미널 16색 번호만 쓴다 → 위 터미널 팔레트를 그대로 따라감 |
 | **btop** | DMS 가 안 만들어 주므로 **matugen 사용자 템플릿**: `linux/matugen/templates/btop.theme` → `~/.config/btop/themes/dank.theme`, `btop.conf` 의 `color_theme = "dank"` |
 | ghostty 탭 바 | 같은 방식: `linux/matugen/templates/ghostty-tabs.css` → `~/.config/ghostty/tabs.css` (터미널 배경색 · 78% 를 탭 바에도 깔아 이어지게) |
+| kime 트레이 아이콘 | 같은 방식: `linux/matugen/templates/kime.yaml` → `~/.config/kime/config.yaml` (다크면 White, 라이트면 Black). post_hook 이 색이 바뀌었을 때만 kime 을 재시작 |
 | nvim | tokyonight day/night 를 터미널 배경 밝기로 고른다 (README) |
 
 **matugen 사용자 템플릿** (`linux/matugen` → `~/.config/matugen` 링크): DMS 설정 Theme → *Run User Templates*(기본 켜짐)이면

@@ -17,3 +17,9 @@ output_path = "~/.config/btop/themes/dank.theme"
 [templates.ghosttytabs]
 input_path = "~/.config/matugen/templates/ghostty-tabs.css"
 output_path = "~/.config/ghostty/tabs.css"
+
+# kime 설정 전체가 이 템플릿이다 (트레이 아이콘 색만 모드에 따라 바뀐다). post_hook 이 kime 을 다시 시작한다
+[templates.kime]
+input_path = "~/.config/matugen/templates/kime.yaml"
+output_path = "~/.config/kime/config.yaml"
+post_hook = "~/.local/bin/kime-follow-theme"

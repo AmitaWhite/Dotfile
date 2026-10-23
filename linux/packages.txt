@@ -43,7 +43,7 @@ pacman  qt6-5compat                 # 테마의 Qt5Compat.GraphicalEffects (블�
 # qt5-graphicaleffects 는 구형 Qt5 SDDM 용 — 지금 SDDM 은 Qt6 라 불필요(지웠다)
 
 # ---- 한글 입력 ----
-aur     kime                        # 한영 = 우측 Command. 설정은 linux/kime/config.yaml
+aur     kime                        # 한영 = 우측 Command. 설정은 matugen 템플릿 linux/matugen/templates/kime.yaml
 
 # ---- 셸 · CLI ----
 pacman  starship                    # 프롬프트
