@@ -185,22 +185,38 @@ step_qylock() {
 }
 
 # ---- 6. 기본 앱 (~/.config/mimeapps.list) ----
-# 이미지는 Loupe 로. 아무것도 지정하지 않으면 zen 브라우저가 이미지를 연다.
-# Loupe 의 .desktop 이 다루는 MIME 형식 전부를 하나씩 지정한다 (xdg-mime 에 한 번에 넘기면 한 줄로 뭉친다)
-step_apps() {
-  say "기본 앱 — 이미지는 Loupe"
-  local desktop=/usr/share/applications/org.gnome.Loupe.desktop m
-  if [ ! -f "$desktop" ]; then
-    note "Loupe 가 없다 — packages 단계 먼저"
+# 지정이 없으면 이미지는 zen 브라우저, PDF 는 onlyoffice 가 연다.
+# 형식은 하나씩 지정한다 (xdg-mime 에 여러 개를 한 인자로 넘기면 mimeapps.list 에 한 줄로 뭉친다)
+set_default() { # <desktop 파일 이름> <MIME 형식…>
+  local app=$1 m
+  shift
+  if [ ! -f "/usr/share/applications/$app" ]; then
+    note "$app 가 없다. packages 단계 먼저"
     return
   fi
-  if [ "$(xdg-mime query default image/png)" = org.gnome.Loupe.desktop ]; then
-    note "이미 Loupe"
-    return
-  fi
-  for m in $(grep '^MimeType=' "$desktop" | sed 's/^MimeType=//' | tr ';' ' '); do
-    run xdg-mime default org.gnome.Loupe.desktop "$m"
+  # 형식 하나만 보면 안 된다: image/apng 처럼 그 앱만 다루는 형식은 지정이 없어도 그 앱으로 나온다
+  local todo=()
+  for m in "$@"; do
+    [ "$(xdg-mime query default "$m")" = "$app" ] || todo+=("$m")
   done
+  if [ ${#todo[@]} -eq 0 ]; then
+    note "이미 $app"
+    return
+  fi
+  for m in "${todo[@]}"; do
+    run xdg-mime default "$app" "$m"
+  done
+}
+
+step_apps() {
+  say "기본 앱: 이미지는 Loupe, PDF 와 전자책은 zathura"
+  local loupe=/usr/share/applications/org.gnome.Loupe.desktop
+  # Loupe 의 .desktop 이 다루는 형식 전부
+  # shellcheck disable=SC2046
+  set_default org.gnome.Loupe.desktop $(grep '^MimeType=' "$loupe" 2>/dev/null | sed 's/^MimeType=//' | tr ';' ' ')
+  # zathura 의 mupdf 플러그인 .desktop 에는 png, jpeg 같은 이미지도 들어 있어서 문서 형식만 고른다
+  set_default org.pwmt.zathura-pdf-mupdf.desktop application/pdf application/oxps application/epub+zip \
+    application/x-fictionbook application/x-mobipocket-ebook
 }
 
 for s in "${steps[@]}"; do "step_$s"; done

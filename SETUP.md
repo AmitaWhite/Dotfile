@@ -242,7 +242,7 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
 | `shell` | fisher + `fish_plugins` 의 플러그인, sdkman + JDK (`JAVA_ID=… setup.sh shell` 로 버전 변경) — §11 |
 | `restore` | `link.sh --restore` — DMS · niri 설정 스냅샷(§1-1). 덮기 전에 묻는다. 이어서 `dms plugins restore` 로 DMS 플러그인 설치 |
 | `qylock` | 로그인 · 잠금 화면 (아래). sudo 가 필요하다 |
-| `apps` | 기본 앱. 이미지를 Loupe 로 연다 (지정이 없으면 zen 브라우저가 연다) |
+| `apps` | 기본 앱. 이미지는 Loupe, PDF 와 전자책은 zathura (지정이 없으면 이미지는 zen 브라우저, PDF 는 onlyoffice 가 연다) |
 
 ### 10-1. 패키지 목록 — `linux/packages.txt`
 

@@ -23,6 +23,8 @@ pacman  foot                        # 가벼운 보조 터미널 (주 터미널�
 pacman  ghostty                     # 주 터미널 (niri Mod+T) · mac 과 같은 것. DMS 설치 프로그램도 넣는다
 pacman  nautilus                    # 파일 관리자 (thunar 대신)
 pacman  loupe                       # 이미지 뷰어 (GNOME). 이미지 기본 앱 지정은 setup.sh apps 단계
+pacman  zathura                     # 가벼운 PDF 뷰어 (키보드 위주). PDF, 전자책 기본 앱
+pacman  zathura-pdf-mupdf           # zathura 의 PDF, EPUB 엔진
 pacman  xdg-desktop-portal-gnome    # niri 의 화면 공유 · 파일 선택 포털
 pacman  xdg-desktop-portal-gtk
 pacman  slurp                       # 화면 영역 선택 (스크린샷 · 녹화)
