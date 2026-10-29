@@ -1,0 +1,63 @@
+# =============================================================================
+# Windows(파견지) 용 Helix languages.toml — React(tsx, Vite) + Spring Boot(Java 17, Gradle)
+#
+# 위치   %APPDATA%\helix\languages.toml
+# 붙여넣기  메모장에 붙여 UTF-8 로 저장
+# 바꿀 것  <사용자> 를 Windows 사용자 폴더 이름으로, JDK 17 경로를 지금 JAVA_HOME 값으로.
+#          경로는 \ 대신 / 로 쓴다 (toml 에서 \ 는 이스케이프 문자)
+# 원칙   모든 언어 auto-format = false. 팀이 ESLint / biome / Prettier 중 무엇을 쓰는지
+#        확인되기 전까진 저장할 때 아무것도 고치지 않는다
+# 순서   README.md 의 단계별 가이드 참고 — Java 부분은 4단계까지 끝난 뒤에 붙인다
+# =============================================================================
+
+# ---- 프론트 (TS / React) ----------------------------------------------------
+# typescript-language-server 는 npm 으로 설치 (README 1단계)
+[[language]]
+name = "typescript"
+language-servers = ["typescript-language-server"]
+auto-format = false
+
+[[language]]
+name = "tsx"
+language-servers = ["typescript-language-server"]
+auto-format = false
+
+[[language]]
+name = "javascript"
+language-servers = ["typescript-language-server"]
+auto-format = false
+
+[[language]]
+name = "jsx"
+language-servers = ["typescript-language-server"]
+auto-format = false
+
+[[language]]
+name = "json"
+auto-format = false
+
+[[language]]
+name = "css"
+auto-format = false
+
+[[language]]
+name = "html"
+auto-format = false
+
+# ---- 백엔드 (Java) ----------------------------------------------------------
+# jdtls 는 JDK 21 로 실행하고, 프로젝트(Gradle) 는 기존 JAVA_HOME 의 JDK 17 로 돌린다
+[language-server.jdtls]
+command = "python"   # python 이 안 되면 "py", 그것도 안 되면 python.exe 전체 경로
+args = [
+  "C:/Users/<사용자>/tools/jdtls/bin/jdtls",
+  "--jvm-arg=-javaagent:C:/Users/<사용자>/tools/lombok.jar",   # Lombok (README 5단계 전까진 이 줄 주석)
+]
+environment = { JAVA_HOME = "C:/Users/<사용자>/tools/jdk-21" }
+
+[language-server.jdtls.config.settings.java]
+import.gradle.java.home = "C:/<지금 JAVA_HOME 의 JDK 17 경로>"
+
+[[language]]
+name = "java"
+language-servers = ["jdtls"]
+auto-format = false

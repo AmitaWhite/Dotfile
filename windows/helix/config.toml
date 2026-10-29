@@ -1,0 +1,31 @@
+# =============================================================================
+# Windows(파견지) 용 Helix config.toml — helix/config.toml 기반
+#
+# 위치   %APPDATA%\helix\config.toml
+#        (PowerShell: notepad $env:APPDATA\helix\config.toml — 폴더가 없으면 먼저 mkdir)
+# 붙여넣기  메모장에 붙여 UTF-8 로 저장
+# 차이   테마만 내장 gruvbox-material 로 (helix/themes/tokyonight.toml 같은 별도 파일 없음)
+# 순서   README.md 의 단계별 가이드 참고
+# =============================================================================
+
+theme = "gruvbox-material"
+
+[editor]
+line-number = "relative"
+true-color = true
+bufferline = "multiple"
+# 저장할 때 자동 포맷하지 않는다 (팀 포맷터와 달라 diff 가 섞이는 걸 막기 위해).
+# 언어별로도 languages.toml 에서 한 번 더 끈다. 필요하면 :format 으로 직접
+auto-format = false
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.soft-wrap]
+enable = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[keys.insert]
+j = { k = "normal_mode" }
