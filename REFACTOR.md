@@ -215,6 +215,24 @@ DMS 가 쓰는 파일 분류 (실측):
 - 설치 시뮬레이션에서 qylock clone(영상 포함 1.2GB)을 `/tmp` 로 복사 → `/tmp` 는 **tmpfs(RAM)** 라 RAM 4GB 기기에서
   systemd-oomd 가 앱을 강제 종료. 큰 파일은 복사하지 말고 링크하거나 디스크(`~/.cache`)에서 할 것
 
+## Phase 10 — 리눅스 데스크톱 다듬기 (2026-10-22 ~ 29)
+
+Phase 9 뒤로 리눅스 쪽에서 바꾼 것. 자세한 사용법은 SETUP, 이유와 확인 과정은 각 커밋 본문에 있다.
+
+- 터미널: 주 터미널을 ghostty 로 바꿨다(niri `Mod+T`, 로그인 때 창 없이 미리 띄움). 탭 바는 얇게, 배경은 matugen 템플릿으로 터미널과 같은 색
+- DMS 색 따라가기: btop 테마, ghostty 탭 바, kime 트레이 아이콘을 matugen 사용자 템플릿으로 만든다(SETUP §10-4).
+  `config.toml` 의 `[templates]` 줄 위에 그 글자를 쓰면 DMS 색 생성 전체가 실패한다는 함정을 한 번 밟았다
+- nvim: JS/TS 는 프로젝트에 eslint 설정이 있으면 eslint 와 prettier, 없으면 biome (`lua/util/jslint.lua`).
+  vtsls 와 린터의 안 쓰는 변수 중복을 거르고, `K` 는 설명이 없으면 조용히. markdown 은 한글 맞춤법 제외, modeline 끔
+- 스크린샷: `Alt+Shift+3/4/5`, 창 캡처는 그림자 넣는 스크립트(SETUP §13)
+- 기본 앱: 이미지 Loupe, PDF zathura (`setup.sh apps`). 이미 지정됐는지를 형식 하나만 보고 판단하다 빈 설정에서 건너뛰는 버그를 고쳤다
+- starship: 경로를 입력 줄 윗줄로, 프롬프트 앞에 빈 줄
+
+사고 기록
+
+- 테스트 프로세스를 `pkill -f` 로 정리하다 명령을 실행하던 셸까지 패턴에 걸려 끝난 적이 두 번 있다. pid 를 골라 끊을 것
+- 맥 remote 를 SSH 주소로 안내해 HTTPS 인증이 깨졌다. 이 저장소는 HTTPS 를 쓴다 (`~/.claude/CLAUDE.md`)
+
 ## 결정 기록 (D)
 
 | # | 주제 | 결정 | 날짜 |

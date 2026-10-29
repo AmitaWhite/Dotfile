@@ -37,10 +37,13 @@ helix/       config.toml, languages.toml, themes/
 fish/        mac/, linux/
 starship/    starship.toml
 fastfetch/   config.jsonc (linux)
-linux/       niri, dms, foot, btop, kime, qylock, matugen (linux 전용)
-             bin/screenshot-window: 맥처럼 그림자 넣은 창 캡처 (~/.local/bin 에 링크)
+linux/       niri, dms, foot, btop, qylock, matugen (linux 전용)
+             matugen/templates: DMS 색으로 만드는 btop 테마, ghostty 탭 바, kime 설정
+             bin/: screenshot-window(그림자 넣은 창 캡처), kime-follow-theme (~/.local/bin 에 링크)
              hypr 는 예전 설정이라 링크하지 않고 보관만
              setup.sh, packages.txt: CachyOS + DMS 새 설치용
+windows/     파견지 회사 Windows 용. helix/(설정과 단계별 가이드), nvim/init.lua(플러그인 없는 단일 파일)
+             link.sh 대상이 아니라 손으로 복사한다. 방법은 각 파일 머리말과 windows/helix/README.md
 archive/     안 쓰지만 남겨둔 것 (wezterm, paneru, thunar, 예전 nvim 설정)
 docs/        nvim 기능 가이드
 link.sh      심링크 스크립트. 어디에 무엇을 거는지는 links.txt
@@ -147,8 +150,10 @@ mason이 자동으로 까는 것은 `stylua`, `shellcheck`, `shfmt`, `lemminx`. 
 ## 셸과 터미널
 
 - fish + fisher. `reitzig/sdkman-for-fish`가 JDK를 잡아주므로 nvim은 fish 터미널에서 켠다
-- ghostty: 주로 쓰는 터미널. 이미지 표시(kitty graphics)를 지원하고, 테마는 OS를 따라간다
-- starship: 프롬프트
+- ghostty: 주로 쓰는 터미널(맥, 리눅스 모두. 리눅스는 niri `Mod+T`). 이미지 표시(kitty graphics), 리가처를 지원하고 테마는 OS를 따라간다
+- foot: 리눅스의 가벼운 보조 터미널. 리가처와 글자색을 따라가는 커서는 안 된다
+- starship: 프롬프트. 윗줄에 경로와 git 변경 줄 수, 입력 줄 오른쪽에 git 상태, 버전, 시간
 - yazi: 파일 매니저, zoxide: 자주 가는 폴더로 `cd`
 - bat, tldr: cat, man 대신
-- 에디터: helix(`hx`), zed (리눅스에서는 `zeditor`)
+- 에디터: helix(`hx`. 리눅스 패키지는 실행 파일이 `helix`라 fish에 `hx` 줄임말을 둔다), zed (리눅스에서는 `zeditor`)
+- 리눅스 데스크톱 앱: 이미지 Loupe, PDF zathura, 파일 nautilus. 기본 앱 지정은 `linux/setup.sh apps`

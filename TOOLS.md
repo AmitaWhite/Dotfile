@@ -22,9 +22,9 @@
 
 | 도구 | 무엇 | 언제 | 설치 | 관계 |
 | --- | --- | --- | --- | --- |
-| **ghostty** | 터미널 에뮬레이터 | 항상 (mac·Linux 공통) | `b:--cask ghostty` `p:ghostty` | kitty graphics 지원 → snacks.image. 설정은 저장소 `.bak` 으로 심링크 |
-| **foot** | Wayland 경량 터미널 | Linux Wayland 에서 ghostty 대신 | `p:foot` | 이미지 렌더 ✘ |
-| **helix** (`hx`) | 모달 에디터 (설정 거의 불필요) | nvim 없이 빠르게 고칠 때, 서버 | `b:helix` `p:helix` | 설정은 저장소 `.bak` 으로 심링크 |
+| **ghostty** | 터미널 에뮬레이터 | 항상, 맥과 리눅스의 주 터미널 | `b:--cask ghostty` `p:ghostty` | kitty graphics 지원이라 snacks.image 가 된다. 설정은 `ghostty/config.mac`, `config.arch` 를 링크 |
+| **foot** | Wayland 경량 터미널 | 리눅스 보조 터미널 | `p:foot` | 이미지 렌더, 리가처 안 됨 |
+| **helix** (`hx`) | 모달 에디터 (설정 거의 불필요) | nvim 없이 빠르게 고칠 때, 서버, 회사 Windows | `b:helix` `p:helix` | 설정은 `helix/` 를 링크. 리눅스 실행 파일은 `helix`. Windows 용은 `windows/helix` |
 | **zed** | GUI 에디터 | 대용량 파일, 페어링 | `b:--cask zed` `p:zed`(Linux 는 `zeditor`) | |
 
 ## 개발 보조
@@ -73,12 +73,15 @@
 
 | 도구 | 무엇 | 언제 | 설치 | 관계 |
 | --- | --- | --- | --- | --- |
-| **kime** | 한글 입력기 (Wayland input-method · XIM) | 항상 | AUR `kime` | DMS 시작 앱으로 실행. 한영 = 우측 Command — [SETUP §9](SETUP.md#9-환경별-주의) |
+| **kime** | 한글 입력기 (Wayland input-method, XIM) | 항상 | AUR `kime` | 자동 시작은 패키지가 한다. 한영은 우측 Command, 트레이 아이콘은 DMS 다크/라이트를 따라간다. [SETUP §9](SETUP.md#9-환경별-주의) |
 | **gdu** | 폴더별 디스크 용량 TUI, 그 자리에서 삭제 (`gdu ~`) | 용량이 어디로 갔는지 볼 때 | `p:gdu` | 맥의 mole "분석" 역할. ncdu 보다 빠르다 — [SETUP §12](SETUP.md#12-디스크-정리) |
+| **loupe** | 이미지 뷰어 (GNOME). 트랙패드 확대, 넘기기 | 이미지 열 때 (기본 앱) | `p:loupe` | 투명 PNG 는 내용과 대비되는 배경 위에 보여준다 |
+| **zathura** | 가벼운 PDF, 전자책 뷰어 (키보드: `j` `k` `J` `K` `/` `q`) | PDF 열 때 (기본 앱) | `p:zathura zathura-pdf-mupdf` | 기본 앱은 문서 형식만 지정 (mupdf 플러그인이 이미지도 등록해서) |
+| **screenshot-window** | 창 캡처에 둥근 모서리, 그림자, 투명 여백 (맥 ⌘⇧4 Space) | `Alt+Shift+5` | `linux/bin` (imagemagick 필요) | 전체 `Alt+Shift+3`, 영역 `Alt+Shift+4`. [SETUP §13](SETUP.md#13-스크린샷-맥-단축키와-비슷하게) |
 | *baobab* | GNOME 디스크 사용량 분석기 (원형 그래프 GUI) | 마우스로 훑어볼 때 | `p:baobab` | 안 깔았음 — gdu 로 충분. 필요할 때만 |
 | *bleachbit* | 앱 캐시 · 로그 · 임시파일 정리 GUI (CleanMyMac 의 "정리" 쪽) | 대청소 | `p:bleachbit` | 안 깔았음. 정리 대상을 하나씩 고르는 방식이라 아래 명령들로 대부분 된다 |
 
-> ⚠️ AUR 의 `mole` 은 **SSH 터널 CLI**(davrodpin/mole)로 이름만 같다. 맥의 Mole(tw93, 디스크 정리)은 macOS 전용이고 리눅스판이 없다.
+> AUR 의 `mole` 은 SSH 터널 CLI(davrodpin/mole)로 이름만 같다. 맥의 Mole(tw93, 디스크 정리)은 macOS 전용이고 리눅스판이 없다.
 
 ## 연습
 
