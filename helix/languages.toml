@@ -17,6 +17,15 @@ args = ["--stdio"]
 [language-server.biome]
 command = "biome"
 args = ["lsp-proxy"]
+# biome.json 이 있는 프로젝트에서만 검사한다. 없으면 기본 규칙으로 검사해서
+# eslint 를 쓰는 프로젝트에 경고가 쏟아지고, 안 쓰는 변수 표시가 vtsls 와 겹친다
+config = { biome = { requireConfiguration = true } }
+
+# 정의 안 된 이름은 ruff(F821) 와 겹쳐 둘 다 error 로 뜨므로 ruff 에 맡긴다.
+# import 정리도 ruff 가 하니 pyright 것은 끈다
+[language-server.pyright.config]
+pyright = { disableOrganizeImports = true }
+python.analysis.diagnosticSeverityOverrides = { reportUndefinedVariable = "none" }
 
 # Lombok 을 붙여 띄운다. 홈 경로가 맥, 리눅스에서 달라 sh 로 $HOME 을 푼다.
 # jdtls 는 JDK 21 이상에서만 돈다 (sdkman, SETUP §3) — fish 터미널에서 helix 를 열 것
@@ -52,10 +61,12 @@ formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.ts
 auto-format = false
 
 # ---- HTML / CSS -------------------------------------------------------------
+# .jsp 는 helix 기본값으로 html 로 열린다 (스크립틀릿 안의 Java 는 LSP 없음).
 # CSS 서버는 mason 에 없다. 필요하면 nvim 에서 :MasonInstall css-lsp
 
 [[language]]
 name = "html"
+language-servers = ["vscode-html-language-server"]   # 기본값의 superhtml 은 안 깔려 있어 뺀다
 formatter = { command = "prettier", args = ["--parser", "html"] }
 auto-format = false
 
