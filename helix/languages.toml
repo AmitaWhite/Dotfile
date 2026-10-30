@@ -62,7 +62,8 @@ auto-format = false
 
 # ---- HTML / CSS -------------------------------------------------------------
 # .jsp 는 helix 기본값으로 html 로 열린다 (스크립틀릿 안의 Java 는 LSP 없음).
-# CSS 서버는 mason 에 없다. 필요하면 nvim 에서 :MasonInstall css-lsp
+# CSS 서버는 nvim 의 mason 목록(nvim/lua/plugins/mason.lua)에 넣은 css-lsp.
+# superhtml 은 쓰지 않는다. HTML 표준만 받는 엄격한 검사기라 .jsp 의 <%@ %>, <c:forEach> 를 오류로 볼 것이다
 
 [[language]]
 name = "html"
