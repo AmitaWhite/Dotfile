@@ -33,7 +33,7 @@ nvim에 이 기준을 적용한 과정은 [REFACTOR.md](REFACTOR.md) Phase 1~5�
 ```txt
 nvim/        Neovim (LazyVim). ~/.config/nvim 에 링크
 ghostty/     config.mac, config.arch
-helix/       config.toml, languages.toml, themes/
+helix/       config.toml, languages.toml, themes/ (언어 서버는 nvim 의 mason 것을 같이 쓴다)
 fish/        mac/, linux/
 starship/    starship.toml
 fastfetch/   config.jsonc (linux)

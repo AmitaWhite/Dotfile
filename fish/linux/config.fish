@@ -59,3 +59,6 @@ if status is-interactive
         echo -en "\e]133;A\e\\"
     end
 end
+
+# nvim 의 mason 이 설치한 언어 서버를 helix 도 쓴다. 맨 뒤라 시스템에 깔린 게 있으면 그게 먼저
+fish_add_path --global --append $HOME/.local/share/nvim/mason/bin

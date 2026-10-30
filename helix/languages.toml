@@ -1,91 +1,79 @@
-# # Java
-# - brew install jdtls
+# 언어 서버와 포맷터는 nvim 의 mason 이 설치한 것을 쓴다 (맥, 리눅스 공통).
+# fish 가 ~/.local/share/nvim/mason/bin 을 PATH 맨 뒤에 둔다 (fish/{mac,linux}/config.fish).
+# 그래서 nvim 을 먼저 한 번 열어 mason 이 다 받은 뒤에 helix 를 쓴다. rust-analyzer 만 rustup.
+# 확인: hx --health <언어>   (리눅스 실행 파일은 helix)
 #
-# # rust
-# - brew install rust-analyzer
-#
-# # Front
-#
-# 1. 언어 서버 (LSP) 설치
-#
-# HTML, CSS, JSON, ESLint 포함
-# - brew install vscode-langservers-extracted
-#
-#  TS/JS용 (vtsls도 가능)
-# - brew install typescript-language-server 
-#
-# Tailwind CSS용 (선택)
-# - brew install tailwindcss-language-server   
+# 자동 포맷은 JS/TS, HTML, CSS 에서 끈다. nvim 처럼 프로젝트 설정(eslint / biome)을 보고
+# 포맷터를 고를 수 없어서, 남의 저장소를 열면 파일 전체를 다시 포맷해 버린다. 필요하면 :format
+# Windows 용은 windows/helix
 
-# 2. Biome 설치 (강력 추천: Linter + Formatter 통합 도구)
-# - brew install biome
+# ---- 서버 정의 --------------------------------------------------------------
 
+# LazyVim 이 쓰는 TS 서버. mason 에 typescript-language-server 는 없다
+[language-server.vtsls]
+command = "vtsls"
+args = ["--stdio"]
+
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+# Lombok 을 붙여 띄운다. 홈 경로가 맥, 리눅스에서 달라 sh 로 $HOME 을 푼다.
+# jdtls 는 JDK 21 이상에서만 돈다 (sdkman, SETUP §3) — fish 터미널에서 helix 를 열 것
+[language-server.jdtls]
+command = "sh"
+args = ["-c", 'exec jdtls --jvm-arg=-javaagent:"$HOME/.local/share/nvim/mason/packages/jdtls/lombok.jar"']
+
+# ---- JS / TS ----------------------------------------------------------------
+# :format 은 biome. eslint 를 쓰는 프로젝트라면 biome 진단이 겹칠 수 있다
 
 [[language]]
 name = "javascript"
-language-servers = ["typescript-language-server", "biome"]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "file.js",
-] }
-auto-format = true
+language-servers = ["vtsls", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.js"] }
+auto-format = false
 
 [[language]]
 name = "typescript"
-language-servers = ["typescript-language-server", "biome"]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "file.ts",
-] }
-auto-format = true
+language-servers = ["vtsls", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.ts"] }
+auto-format = false
 
 [[language]]
 name = "jsx"
-language-servers = ["typescript-language-server", "biome"]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "file.jsx",
-] }
-auto-format = true
+language-servers = ["vtsls", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.jsx"] }
+auto-format = false
 
 [[language]]
 name = "tsx"
-language-servers = ["typescript-language-server", "biome"]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "file.tsx",
-] }
-auto-format = true
+language-servers = ["vtsls", "biome"]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.tsx"] }
+auto-format = false
 
+# ---- HTML / CSS -------------------------------------------------------------
+# CSS 서버는 mason 에 없다. 필요하면 nvim 에서 :MasonInstall css-lsp
 
-
-
-
-
-# HTML/CSS는 기존 LSP 유지
 [[language]]
 name = "html"
-language-servers = ["vscode-html-language-server"]
-#formatter = {command = "biome" , args=["format","--stdin-file-path"]}
-formatter = {command = "prettier", args=["--parser","html"]}
-auto-format = true
+formatter = { command = "prettier", args = ["--parser", "html"] }
+auto-format = false
 
 [[language]]
 name = "css"
-language-servers = ["vscode-css-language-server"]
-formatter = {command = "prettier", args=["--parser","css"]}
-auto-format = true
+formatter = { command = "prettier", args = ["--parser", "css"] }
+auto-format = false
 
+# ---- 그 밖 ------------------------------------------------------------------
+
+[[language]]
+name = "python"
+language-servers = ["pyright", "ruff"]
+
+[[language]]
+name = "java"
+language-servers = ["jdtls"]
 
 [[language]]
 name = "sql"
-formatter = { command = "sqlfluff", args = [
-  "format",
-  "-",
-  "--dialect",
-  "oracle",
-] }
+formatter = { command = "sqlfluff", args = ["format", "-", "--dialect", "postgres"] }

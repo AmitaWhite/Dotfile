@@ -24,7 +24,7 @@
 | --- | --- | --- | --- | --- |
 | **ghostty** | 터미널 에뮬레이터 | 항상, 맥과 리눅스의 주 터미널 | `b:--cask ghostty` `p:ghostty` | kitty graphics 지원이라 snacks.image 가 된다. 설정은 `ghostty/config.mac`, `config.arch` 를 링크 |
 | **foot** | Wayland 경량 터미널 | 리눅스 보조 터미널 | `p:foot` | 이미지 렌더, 리가처 안 됨 |
-| **helix** (`hx`) | 모달 에디터 (설정 거의 불필요) | nvim 없이 빠르게 고칠 때, 서버, 회사 Windows | `b:helix` `p:helix` | 설정은 `helix/` 를 링크. 리눅스 실행 파일은 `helix`. Windows 용은 `windows/helix` |
+| **helix** (`hx`) | 모달 에디터 (설정 거의 불필요) | nvim 없이 빠르게 고칠 때, 서버, 회사 Windows | `b:helix` `p:helix` | 설정은 `helix/` 를 링크. 언어 서버는 nvim 의 mason 것을 같이 쓴다(fish 가 `mason/bin` 을 PATH 맨 뒤에). 리눅스 실행 파일은 `helix`. Windows 용은 `windows/helix` |
 | **zed** | GUI 에디터 | 대용량 파일, 페어링 | `b:--cask zed` `p:zed`(Linux 는 `zeditor`) | |
 
 ## 개발 보조
