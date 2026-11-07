@@ -16,7 +16,7 @@ Intel 맥은 brew bottle 이 없어 Rust 도구를 brew 로 받으면 rust, llvm
 | **yazi** | 터미널 파일 매니저 (미리보기·벌크 rename) | 파일 정리·이동, 이미지 훑기 | `c:yazi-build` `p:yazi` | nvim 밖에서 탐색할 때. 안에서는 `<leader>e`. crates.io 의 `yazi-fm` 은 파일이 빠져 빌드 안 됨 (26.5.6 실측) |
 | **eza** | `ls` 대체 — git 상태·트리·아이콘 | `ls`, `eza --tree --git` | `c:eza` `p:eza` | Nerd Font 필요 |
 | **bat** | `cat` 대체 — 신택스 하이라이트·git diff 표시 | 파일 잠깐 볼 때 | `c:bat` `p:bat` | fzf/picker 프리뷰가 bat 을 쓰면 색이 붙음 |
-| **tldr** | `man` 요약 예제 | 명령 옵션이 기억 안 날 때 | `b:tlrc` `p:tlrc` | |
+| **tldr** | `man` 요약 예제 | 명령 옵션이 기억 안 날 때 | `c:tlrc` `p:tlrc` | |
 | **nushell** | 구조화 데이터 셸 (`ls \| where size > 1mb`, json/csv 파이프) | 로그·json·csv 가공 | `b:nushell` `p:nushell` | 기본 셸은 fish 유지, 데이터 작업용으로만 |
 
 ## 터미널 · 에디터
