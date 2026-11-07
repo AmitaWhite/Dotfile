@@ -55,6 +55,10 @@ set --export PATH $BUN_INSTALL/bin $PATH
 # 되돌리려면 이 줄만 지우면 됨. 자세한 내용: ~/Downloads/geemap-docs/path-cleanup.md
 fish_add_path --global --move --prepend $HOME/.local/bin
 
+# node 는 fnm 이 받은 공식 빌드를 쓴다. brew node 는 Intel 맥에서 소스 빌드라, 고정해 두면
+# 같이 올라간 라이브러리(simdjson 등)와 어긋나 실행조차 안 된다 (2026-11 실측)
+fnm env --use-on-cd --shell fish | source
+
 # nvim 의 mason 이 설치한 언어 서버를 helix 도 쓴다. 맨 뒤라 시스템에 깔린 게 있으면 그게 먼저
 fish_add_path --global --append $HOME/.local/share/nvim/mason/bin
 

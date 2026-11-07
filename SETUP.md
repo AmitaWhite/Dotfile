@@ -94,7 +94,7 @@ DMS **플러그인**(지금은 Wallpaper Carousel)은 lock 파일만으론 안 �
 | **fzf** | 퍼지 검색 백엔드 | `fzf` | `fzf` |
 | **lazygit** | Git UI (`<leader>gg`) | `lazygit` | `lazygit` |
 | **Nerd Font** | 아이콘 (mini.icons, lualine, 탐색기) | `--cask font-jetbrains-mono-nerd-font` | `ttf-jetbrainsmono-nerd` |
-| **node + npm** | mason 이 설치하는 LSP 대부분이 node 로 실행됨 (아래 §5) | `node` 또는 fnm | `nodejs npm` |
+| **node + npm** | mason 이 설치하는 LSP 대부분이 node 로 실행됨 (아래 §5) | `cargo install --locked fnm` 후 `fnm install --lts`. brew node 는 쓰지 말 것 (TOOLS.md 머리말) | `nodejs npm` |
 | **python3 + pip/venv** | ruff·debugpy·sqlfluff 실행, venv 선택 | `uv` 권장 (공식 설치 스크립트) | `python uv` |
 
 터미널: 이미지 렌더(snacks.image)는 **kitty graphics protocol** 지원 터미널(ghostty · kitty · wezterm)에서만 된다. foot/기본 Terminal.app/WSL 콘솔은 안 됨.
