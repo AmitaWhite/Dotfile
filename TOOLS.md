@@ -4,17 +4,18 @@
 각 항목: 무엇 / 언제 쓰나 / 설치 / nvim·셸과의 관계.
 
 설치 열의 표기: `b:` = `brew install`, `p:` = `pacman -S`, `u:` = `uv tool install`, `n:` = `npm i -g`, `c:` = `cargo install`.
+Intel 맥은 brew bottle 이 없어 Rust 도구를 brew 로 받으면 rust, llvm 까지 소스 빌드한다. 그래서 맥에서 Rust 도구는 `c:`(rustup 의 cargo, `--locked`)로 받는다.
 
 ## 셸 · 탐색 — 매일 쓰는 것
 
 | 도구 | 무엇 | 언제 | 설치 | 관계 |
 | --- | --- | --- | --- | --- |
 | **fish** + **fisher** | 셸 + 플러그인 매니저 | 항상 | `b:fish` `p:fish` / fisher 는 스크립트 | sdkman-for-fish 로 JDK 초기화 → jdtls |
-| **starship** | 프롬프트 | 항상 | `b:starship` `p:starship` | `starship.toml` 은 저장소 백업 참고 |
-| **zoxide** | 방문 이력으로 점프하는 `cd` (`z proj`) | 디렉토리 왕복이 잦을 때 | `b:zoxide` `p:zoxide` | fish 에서 `zoxide init fish` |
-| **yazi** | 터미널 파일 매니저 (미리보기·벌크 rename) | 파일 정리·이동, 이미지 훑기 | `b:yazi` `p:yazi` | nvim 밖에서 탐색할 때. 안에서는 `<leader>e` |
-| **eza** | `ls` 대체 — git 상태·트리·아이콘 | `ls`, `eza --tree --git` | `b:eza` `p:eza` | Nerd Font 필요 |
-| **bat** | `cat` 대체 — 신택스 하이라이트·git diff 표시 | 파일 잠깐 볼 때 | `b:bat` `p:bat` | fzf/picker 프리뷰가 bat 을 쓰면 색이 붙음 |
+| **starship** | 프롬프트 | 항상 | `c:starship` `p:starship` | `starship.toml` 은 저장소 백업 참고 |
+| **zoxide** | 방문 이력으로 점프하는 `cd` (`z proj`) | 디렉토리 왕복이 잦을 때 | `c:zoxide` `p:zoxide` | fish 에서 `zoxide init fish` |
+| **yazi** | 터미널 파일 매니저 (미리보기·벌크 rename) | 파일 정리·이동, 이미지 훑기 | `c:yazi-build` `p:yazi` | nvim 밖에서 탐색할 때. 안에서는 `<leader>e`. crates.io 의 `yazi-fm` 은 파일이 빠져 빌드 안 됨 (26.5.6 실측) |
+| **eza** | `ls` 대체 — git 상태·트리·아이콘 | `ls`, `eza --tree --git` | `c:eza` `p:eza` | Nerd Font 필요 |
+| **bat** | `cat` 대체 — 신택스 하이라이트·git diff 표시 | 파일 잠깐 볼 때 | `c:bat` `p:bat` | fzf/picker 프리뷰가 bat 을 쓰면 색이 붙음 |
 | **tldr** | `man` 요약 예제 | 명령 옵션이 기억 안 날 때 | `b:tlrc` `p:tlrc` | |
 | **nushell** | 구조화 데이터 셸 (`ls \| where size > 1mb`, json/csv 파이프) | 로그·json·csv 가공 | `b:nushell` `p:nushell` | 기본 셸은 fish 유지, 데이터 작업용으로만 |
 
@@ -33,8 +34,8 @@
 | --- | --- | --- | --- | --- |
 | **lazygit** | Git TUI | 스테이징·커밋·리베이스 | `b:lazygit` `p:lazygit` | nvim `<leader>gg` (필수 도구) |
 | **hyperfine** | 커맨드 벤치마크 (`hyperfine 'cmd a' 'cmd b'`) | 스크립트/빌드 속도 비교 | `b:hyperfine` `p:hyperfine` | nvim 시작 시간 비교엔 `nvim --startuptime` |
-| **tokei** | 코드 라인 수 (언어별) | 프로젝트 규모 파악 | `b:tokei` `p:tokei` | |
-| **silicon** | 코드 → 이미지 | 코드 공유 (한글 ✘) | `b:silicon` `p:silicon` | |
+| **tokei** | 코드 라인 수 (언어별) | 프로젝트 규모 파악 | `c:tokei` `p:tokei` | |
+| **silicon** | 코드 → 이미지 | 코드 공유 (한글 ✘) | `c:silicon` `p:silicon` | `--locked` 없이 받는다 (고정된 `time` 크레이트가 새 rustc 에서 빌드 안 됨) |
 
 ## DB / SQL
 

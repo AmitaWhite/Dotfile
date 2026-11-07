@@ -90,12 +90,12 @@ DMS **플러그인**(지금은 Wallpaper Carousel)은 lock 파일만으론 안 �
 | **neovim ≥ 0.11** (현재 0.12.5) | `winborder`, 배경 자동 감지, `vim.lsp.config` 사용 | `neovim` | `neovim` |
 | **git, curl, wget, unzip, gzip, tar** | lazy.nvim 플러그인 clone, mason 이 LSP/포매터 다운로드·압축 해제 | 기본 + `wget` | `base` + `wget unzip` |
 | **C 컴파일러** | treesitter 파서 컴파일 | `xcode-select --install` | `base-devel` |
-| **ripgrep (`rg`), fd** | 파일·문자열 검색 (snacks.picker, grep) | `ripgrep fd` | `ripgrep fd` |
+| **ripgrep (`rg`), fd** | 파일·문자열 검색 (snacks.picker, grep) | `cargo install --locked ripgrep fd-find` (TOOLS.md 머리말) | `ripgrep fd` |
 | **fzf** | 퍼지 검색 백엔드 | `fzf` | `fzf` |
 | **lazygit** | Git UI (`<leader>gg`) | `lazygit` | `lazygit` |
 | **Nerd Font** | 아이콘 (mini.icons, lualine, 탐색기) | `--cask font-jetbrains-mono-nerd-font` | `ttf-jetbrainsmono-nerd` |
 | **node + npm** | mason 이 설치하는 LSP 대부분이 node 로 실행됨 (아래 §5) | `node` 또는 fnm | `nodejs npm` |
-| **python3 + pip/venv** | ruff·debugpy·sqlfluff 실행, venv 선택 | `uv` 권장 | `python uv` |
+| **python3 + pip/venv** | ruff·debugpy·sqlfluff 실행, venv 선택 | `uv` 권장 (공식 설치 스크립트) | `python uv` |
 
 터미널: 이미지 렌더(snacks.image)는 **kitty graphics protocol** 지원 터미널(ghostty · kitty · wezterm)에서만 된다. foot/기본 Terminal.app/WSL 콘솔은 안 됨.
 
