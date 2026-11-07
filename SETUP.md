@@ -226,12 +226,16 @@ MacBook Air 2014 에서 쓰는 구성. 순서가 중요하다 — DMS 가 기본
 1. CachyOS 설치 프로그램 → 데스크톱 "No desktop"
    (MacBook Air 2014: Broadcom Wi-Fi 는 기본으로 안 잡힌다. 휴대폰 USB 테더링으로 연결하면
     설치 프로그램이 하드웨어를 감지해 broadcom-wl-dkms 를 자동으로 넣는다 — packages.txt 엔 적지 않음)
-2. curl -fsSL https://install.danklinux.com | sh         DMS 설치 프로그램 (niri · quickshell · ghostty · matugen …)
+2. curl -fsSL https://install.duxlabs.dev | sh         DMS 설치 프로그램 (niri · quickshell · ghostty · matugen …)
 3. 재부팅 → niri 세션에 로그인해 DMS 를 한 번 띄운다      ~/.config/niri/dms/* · settings.json 생성
 4. git clone https://github.com/AmitaWhite/Dotfile.git ~/Dotfile
 5. ~/Dotfile/linux/setup.sh --dry-run  →  ~/Dotfile/linux/setup.sh
 6. 재부팅 (SDDM 로그인 화면 확인)
 ```
+
+DankMaterialShell(DMS)은 2026-11에 Dux Shell(duxlabs-dev)로 이름이 바뀌었다. pacman 패키지는 `dux-shell`이 `dms-shell`을 대신한다.
+명령(`dms`), 서비스(`dms.service`), 설정 폴더(`~/.config/DankMaterialShell`, `~/.config/niri/dms`)는 그대로라 이 문서의 DMS 는 Dux Shell 로 읽으면 된다.
+`dms migrate dux`는 Debian, openSUSE 의 패키지 저장소를 옮기는 명령이라 CachyOS 에서는 필요 없다.
 
 `setup.sh` 가 하는 일 (단계 이름으로 골라 돌릴 수 있다: `setup.sh qylock`). 여러 번 돌려도 이미 된 단계는 건너뛴다.
 

@@ -6,7 +6,7 @@
 #   linux/setup.sh qylock          특정 단계만 (여러 개 가능)
 #   linux/setup.sh --dry-run       무엇을 할지만 출력
 #
-# 전제: DMS 설치 프로그램(curl -fsSL https://install.danklinux.com | sh)을 먼저 돌리고
+# 전제: DMS 설치 프로그램(curl -fsSL https://install.duxlabs.dev | sh)을 먼저 돌리고
 #       niri 세션에 한 번 로그인해 DMS 가 기본 파일을 만든 상태.
 set -euo pipefail
 
@@ -57,7 +57,7 @@ step_packages() {
 
   if [ ${#miss_dms[@]} -gt 0 ]; then
     note "DMS 설치 프로그램 쪽이 빠져 있다: ${miss_dms[*]}"
-    note "→ curl -fsSL https://install.danklinux.com | sh 를 먼저 돌릴 것"
+    note "→ curl -fsSL https://install.duxlabs.dev | sh 를 먼저 돌릴 것"
   fi
   if [ ${#miss_pacman[@]} -gt 0 ]; then
     run sudo pacman -S --needed "${miss_pacman[@]}"
